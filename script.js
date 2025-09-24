@@ -28,7 +28,7 @@ function crearVariables() {
     );
 
     alert(
-        `Suma Edad + Nacimiento: "${numero1 + numero2}"` 
+        `Suma Edad + Nacimiento: "${numero1 + numero2}"`
     )
 
     alert(
@@ -36,9 +36,123 @@ function crearVariables() {
     )
 }
 
-crearVariables();
+// crearVariables();
+
+/**
+ * 2-Realiza un programa que solicite números al usuario hasta que introduzca un 0. Y que
+ *   muestre los valores: máximo, mínimo, suma, media y total de números introducidos.
+ */
+function solicitarNumeros() {
+    let maximo = 0;
+    let minimo = 0;
+    let suma = 0;
+    let media = 0;
+    let total = 0;
+    let numeroIngresado = 0;
+
+    do {
+        numeroIngresado = Number(prompt("Ingrese 0 => SALIR\nIngrese un número:"));
+
+        if (numeroIngresado !== 0) {
+            if (numeroIngresado > maximo) {
+                maximo = numeroIngresado;
+            }
+
+            if (minimo === 0) {
+                minimo = numeroIngresado;
+            } else if (numeroIngresado < minimo) {
+                minimo = numeroIngresado;
+            }
+
+            suma += numeroIngresado;
+            total++;
+        }
+
+    } while (numeroIngresado !== 0);
+
+    media = suma / total;
+
+    if (typeof(media) != Number) {
+        alert('Sin datos suficientes');
+        return;
+    }
+    alert(
+        `Máximo: ${maximo}\nMínimo: ${minimo}\nSuma: ${suma}\nMedia: ${media}\nTotal: ${total}`
+    );
+}
+
+// solicitarNumeros();
 
 
+/**
+ * 3-Crea una función reciba un número y que dibuje un rectángulo hueco de lado del tamaño del número
+ * indicado. El valor devuelto será un array con cada una de las cadenas que forman el rectángulo.
+ * Añade el código auxiliar necesario para probar la aplicación.
+ */
+function rectanguloHueco(signo = '*') {
+
+    let lado = Number(prompt('Indique el lado del rectángulo'));
+
+    let lineas = [];
+    let linea = [];
+    for (let i = 0; i < lado; i++) {
+        linea[i] = '';
+        for (let j = 0; j < lado; j++) {
+            if (i == 0 || j == 0 || j == lado-1 || i == lado-1) {
+                linea[i] += signo;
+            } else {
+                linea[i] += ' ';
+            }
+        }
+
+        lineas.push(linea[i]);
+    }
+
+    console.log(lineas.join("\n"));
+}
+
+// rectanguloHueco('*');
+
+/**
+ * 4- Crea una función reciba un número y que dibuje un triángulo de altura el tamaño del
+ * número indicado. El valor devuelto será un array con cada una de las cadenas que forman el
+ * rectángulo.
+ * Añade el código auxiliar necesario para probar la aplicación
+ */
+function triangulo(signo = '*') {
+    let altura = Number(prompt('Indique la altura del triángulo:'));
+
+    if (altura < 3 || altura % 2 === 0) {
+        alert('La altura debe ser impar y mayor que 3');
+        return;
+    }
+
+    let lineas = [];
+
+    for (let i = 0; i < altura; i++) {
+        let espacios = ' '.repeat(altura - i - 1);
+        let simbolos = signo.repeat(2 * i + 1);
+        lineas.push(espacios + simbolos + espacios);
+    }
+
+    console.log(lineas.join('\n'));
+}
+
+// triangulo();
+
+
+/**
+ * 5- Crea una función reciba un número y que dibuje un rombo de diagonal del tamaño del
+ * número indicado. El valor devuelto será un array con cada una de las cadenas que forman el rombo.
+ * Añade el código auxiliar necesario para probar la aplicación.
+ */
+function rombo(signo = '*') {
+    let diagonalMenor = Number(prompt('Indique la diagonal menor del rombo:'));
+
+    let lineas = [];
+    let linea = [];
+
+}
 
 // function cuadrado (tamañao) {
 //     let linea = [];
