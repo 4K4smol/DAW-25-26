@@ -149,8 +149,152 @@ function triangulo(signo = '*') {
 function rombo(signo = '*') {
     let diagonalMenor = Number(prompt('Indique la diagonal menor del rombo:'));
 
-    let lineas = [];
+    if (diagonalMenor % 2 == 0 || diagonalMenor < 3) {
+        alert('El tamaño de la diagonal menor debe ser mayor a 3 e impar');
+        return;
+    }
+
+    let lineas = [] // Array de candeas (Completo)
+    let lineas1 = []; // Array de cadenas (parte inferior)
+    let lineas2 = [] // Array de cadenas (parte superior)
+    let linea = []; // Cadenas a agrupar
+    let espacio_incremental = 0; // Espacio al principio y final lineas
+
+    for (let i = diagonalMenor; i > 0 ; i--) {
+        linea[i] = '';
+
+        linea[i] = ' '.repeat(espacio_incremental) + signo.repeat(diagonalMenor) + ' '.repeat(espacio_incremental);
+        lineas1.push(linea[i]);
+        diagonalMenor -= 2;
+        if (diagonalMenor < 0) {
+            break;
+        }
+        espacio_incremental++;
+    }
+
+    /**
+     * Copiar array entero excepto el primer elemento (base)
+     * Darle la vuelta porque es la parte superior
+     * Añadir dos arrays seguidos concatenar
+     */
+    lineas2 = lineas1.slice(1).reverse();
+    lineas = lineas2.concat(lineas1);
+
+    console.log(lineas.join('\n'));
+}
+
+// rombo();
+
+
+/**
+ * 6-Crea una función que dibuje en un alert la figura geométrica indicada por parámetro. Donde
+ * el primer parámetro será la función que genera el polígono y el segundo parámetro el número
+ * que indica el tamaño del polígono.
+ * Deberás definir un menú que solicite el polígono a representar: cuadrado hueco, triangulo,
+ * rombo. Y después solicitar el tamaño al usuario. Incluye una opción de terminar.
+ * Añade el código auxiliar necesario para probar la aplicación.
+ */
+function figuraGeometrica() {
+    let seleccion = 0;
+    do {
+        seleccion = Number(prompt(
+            'Seleccione una opcione:\n\t[0] => Salir\n\t[1] => Triángulo\n\t[2] => Rectángulo Hueco\n\t[3] => Rombo'
+        ));
+
+        switch (seleccion) {
+            case 0:
+                alert('Hasta nunca');
+                break;
+            
+            case 1:
+                triangulo();
+                break;
+            
+            case 2:
+                rectanguloHueco();
+                break;
+            
+            case 3:
+                rombo();
+                break;
+
+            default:
+                alert('No sabes leer chavalín w(ﾟДﾟ)w')
+                break;
+        }
+
+    } while (seleccion != 0)
+}
+
+// figuraGeometrica();
+
+
+/**
+ * 7-Crea una función que reciba un número e imprima la tabla de multiplicar.
+ * Crea una función que solicite dos números entre 0 y 10, y que imprima las tablas de multiplicar
+ * entre los números indicados. Las tablas aparecerán desde el número más pequeño al mayor
+ * (aquí hay validaciones).
+ * Añade el código auxiliar necesario para probar la aplicación.
+ */
+function tablaMultiplicarPorNumero() {
+    let valor1 = 0; // Primer valor a ingresar
+    let valor2 = 0; // Segundo valor a ingresar
+    let menor = 0; // Número menor
+    let mayor = 0; // Número mayor
+    let tabla = [];
     let linea = [];
+
+
+    do {
+        valor1 = prompt("Ingrese el primer valor: ");
+        if (valor1 < 1) alert('Añade un valor mayor a 1');
+        if (valor1 > 10) alert('Añade un valor menor a 10');
+    } while (valor1 < 1 || valor1 > 9)
+
+    do {
+        valor2 = Number(prompt("Ingrese el segundo valor: "));
+        if (valor2 < 1) alert('Añade un valor mayor a 1');
+        if (valor2 > 10) alert('Añade un valor menor a 10');
+    } while (valor2 < 1 || valor2 > 9)
+
+    menor = valor1 > valor2 ? valor2 : valor1;
+    mayor = valor1 > valor2 ? valor1 : valor2;
+
+    for (let i = menor; i <= mayor; i++) {
+        tabla[i] = '';
+        for (let j = 1; j < 10; j++) {
+            linea[j] = `${i} * ${j} = ${j*i}\n`
+            tabla[i] += linea[j];
+        }
+        tabla[i] += '\n';
+    }
+
+    console.log(tabla.join('\n'));
+}
+
+// tablaMultiplicarPorNumero();
+
+/**
+ * 8-Crea una función que reciba un número y calcule su factorial, la función devolverá una
+ * cadena con el desarrollo del factorial. Por ejemplo, para una entrada de 4 devolverá la cadena
+ * “4x3x2x1=24”.
+ * Añade el código auxiliar necesario para probar la aplicación. El script solicitará números al
+ * usuario hasta que no desee continuar
+ */
+function calcularFactorial() {
+    let numero = 0;
+
+    do {
+        numero = Number(prompt(
+            'Seleccione una opcione:\n\t[0] => Salir\n\tCualquier número entre 100 y 1'
+        ));
+
+        if (numero < 1 || numero > 99) {
+
+        }
+
+    } while (numero != 0)
+
 
 }
 
