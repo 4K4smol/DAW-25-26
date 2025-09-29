@@ -452,8 +452,6 @@ function randomEntre(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
-
 /**
  * 13-Juego mates
  * Crea un programa que genere dos números aleatorios entre 1 y 10, y un operador aritmético.
@@ -467,8 +465,315 @@ function randomEntre(min, max) {
  * Añade el código auxiliar necesario para probar la aplicación
  */
 function juegoMates() {
+    // Variables fijas.
+    let numero1 = randomEntre(1, 10);
+    let numero2 = randomEntre(1, 10);
+    let operadorRandom = randomEntre(1, 4);
+    let operacion = ['+', '*', '/', '-'];
+
+    // Variables graciosas
+    let resultado = 0;
+    let repeticion = 1;
+    let terminar = false;
+    let resumen = [];
+
+
+    do {
+        switch (operadorRandom) {
+            case 1:
+                resultado = numero1 + numero2;
+                break;
+            case 2:
+                resultado = numero1 * numero2;
+                break;
+            case 3:
+                resultado = numero1 / numero2;
+                break;
+            case 4:
+                resultado = numero1 - numero2;
+                break;
+            default:
+                break;
+        }
+
+        let pregunta = `El calcule el resultado de ${numero1} ${operacion[operadorRandom - 1]} ${numero2}`;
+        let resultadoUsuario = Number(prompt(`${pregunta}`));
+        let acierto = false;
+        if (resultadoUsuario == resultado) {
+            acierto = true;
+        }
+
+        resumen.push({
+            Iteración: repeticion,
+            Pregunta: pregunta,
+            Acierto: acierto
+        });
+
+        if (repeticion == 4) {
+            let continuarUsuario;
+            do {
+                continuarUsuario = prompt('¿Desea Continuar?\n\t(s) => Continuar\n\t(n) => Quit');
+                if (continuarUsuario.toLowerCase() == 's') {
+                    repeticion = 0;
+
+                    // Generar nuevos números y operador para la siguiente iteración
+                    numero1 = randomEntre(1, 10);
+                    numero2 = randomEntre(1, 10);
+                    operadorRandom = randomEntre(1, 4);
+
+                    break;
+                } else if (continuarUsuario.toLowerCase() == 'n') {
+                    terminar = true;
+                    break;
+                }
+            } while (true);
+        }
+
+        repeticion++;
+        operadorRandom = randomEntre(1, 4);
+    } while (!terminar);
+
+    console.log(resumen);
 
 }
 
 
-juegoMates();
+// juegoMates();
+
+/**
+ * 14-Crea un programa de gestión académica.
+ * Teniendo en cuenta:
+ *   • El objeto JSON de tipo alumno tiene las propiedades “nombre” y “asignaturas”.
+ *   • El objeto JSON de tipo asignatura tiene las propiedades “modulo” y “nota”. 
+ *   • Disponemos módulos de “DWEC”, “DIW”, “DWES” y “DAW”.
+ * Partiendo de un array de al menos 3 alumnos debidamente inicializados. 
+ * Crea una función que reciba el array de alumnos y que para cada alumno añada las siguientes 
+ * propiedades:
+ *    • promociona, valor true si todos los módulos están aprobados, falso en caso contrario.
+ *    • media, valor medio del expediente del alumno.
+ * Crea una función que reciba el array de alumnos modificado e imprima el listado de alumnos 
+ * que promocionan con el formato “Índice-Nombre-Media”.
+ * Crea una función que reciba el array de alumnos modificados e imprima el listado de alumnos 
+ * que no promocionan con el formato “Índice-Nombre-Pendientes:[pendiente1, pendiente2, etc..]”.
+ * Añade el código auxiliar necesario para probar la aplicación
+ */
+function gestionAcademica() {
+    // Objeto Json de alumno
+    let alumno1 = {
+        nombre: 'Pablo',
+        asignaturas: [
+            { modulo: 'DWEC', nota: '1', },
+            { modulo: 'DIW', nota: '3', },
+            { modulo: 'DWES', nota: '6', },
+            { modulo: 'DAW', nota: '6' }
+        ]
+    };
+    let alumno2 = {
+        nombre: 'Jose',
+        asignaturas: [
+            { modulo: 'DWEC', nota: '6', },
+            { modulo: 'DIW', nota: '9', },
+            { modulo: 'DWES', nota: '1', },
+            { modulo: 'DAW', nota: '6' }
+        ]
+    };
+    let alumno3 = {
+        nombre: 'Antonio',
+        asignaturas: [
+            { modulo: 'DWEC', nota: '7', },
+            { modulo: 'DIW', nota: '7', },
+            { modulo: 'DWES', nota: '7', },
+            { modulo: 'DAW', nota: '5' }
+        ]
+    };
+
+    // Array de alumnos
+    let alumnos = [alumno1, alumno2, alumno3];
+
+    promociona(alumnos);
+    imprimirPromocion(alumnos);
+    imprimirNoPromocion(alumnos);
+}
+
+function promociona(alumnos) {
+    alumnos.map(alumno => {
+        let promocion = true;
+        let media = 0;
+        let suma = 0;
+        alumno.asignaturas.map(asignatura => {
+            suma += Number(asignatura.nota);
+            if (asignatura.nota < 5) {
+                promocion = false;
+            }
+            alumno.promocion = promocion;
+        });
+        media = suma / 4;
+        alumno.media = media;
+    });
+}
+
+function imprimirPromocion(alumnos) {
+    let impresion = [];
+    alumnos.map((alumno, index) => {
+        if (alumno.promocion === true) {
+            impresion.push(`Indice: ${index} - Nombre: ${alumno.nombre} - Media ${alumno.media}`);
+        }
+    });
+
+    console.log(impresion);
+}
+
+function imprimirNoPromocion(alumnos) {
+    let impresion = [];
+
+    alumnos.map((alumno, index) => {
+        let linea = '';
+        if (alumno.promocion === false) {
+            linea = `Indice: ${index} - Nombre: ${alumno.nombre} - Pendientes[`;
+
+            alumno.asignaturas.map(asignatura => {
+                if (Number(asignatura.nota) < 5) {
+                    linea += `${asignatura.modulo}, `;
+                }
+            });
+
+            // Borrar última coma, no se hacer split()
+            if (linea.endsWith(', ')) {
+                linea = linea.slice(0, -2);
+            }
+
+            linea += ']';
+            impresion.push(linea);
+        }
+    });
+
+    console.log(impresion.join('\n'));
+
+}
+
+// gestionAcademica();
+
+
+/**
+ * 15-Crea un programa de gestión de personal.
+ * La entidad “trabajador” tiene las propiedades: “código”, “nombre”, “categoría”, 
+ * “contratación”.
+ * Donde:
+ *  • Propiedad “código” tiene el formato “E01”, “E02” y es un valor único identificativo del 
+ * trabajador. Se asigna automáticamente al crear el trabajador y no puede modificarse.
+ *  • Propiedad “nombre” es el nombre del trabajador.
+ *  • Propiedad “categoría” puede tomar los valores, 1, 2, 3 y representa el salario base a 
+ * percibir. Donde 1-1100€, 2-1400€, 3-1900€
+ *  • Propiedad “contratación” indica el año de contratación, necesario para calcular la 
+ * antigüedad.
+ *  • El importe de la nomina se calcula en base a la categoría más un 4% por cada año de 
+ * antigüedad.
+ * Se pide:
+ * Almacenar en un array los datos de mis trabajadores.
+ *  • Listar trabajadores.
+ *  • Crear trabajador.
+ *  • Borrar trabajador, solicitando el código y confirmación.
+ *  • Modificar trabajador, solicitando el código y ofreciendo como valor por defecto el valor actual.
+ *  • Calcular nóminas. Listado ordenado por categorías de nominas con un resumen del
+ *      importe total de las nóminas de cada categoría, así como el resumen final del importe 
+ *      total de todas las nóminas de la empresa.
+ * Consideraciones:
+ *  • Puede/debes tener datos cacheados.
+ *  • Implementa un menú para interactuar con la aplicación. Incluye la opción de terminar.
+ *  • Añade validaciones.
+ *  • Estructura y comenta el código.
+ */
+
+// Datos globales 
+const trabajadores = [];
+
+
+function gestorPersonal() {
+    // Generar Menú
+
+}
+
+function listarTrabajadores() {
+
+}
+function modificarTrabajador() {
+
+}
+function crearTrabajador() {
+    let nombre = prompt('Introduce el nombre del trabajador:');
+    if (!validarNombre(nombre)) {
+        alert('El nombre no puede estar vacío.');
+        return;
+    }
+
+    let categoria = prompt('Introduce la categoría (1, 2, 3):');
+    if (!validarCategoria(categoria)) {
+        alert('Categoría inválida.');
+        return;
+    }
+
+    let anio = prompt('Introduce el año de contratación (ej. 2020):');
+    anio = parseInt(anio);
+
+    if (!validarAnio(anio)) {
+        alert('Año de contratación inválido.');
+        return;
+    }
+
+    trabajadores.push({
+        codigo: generarCodigo(),
+        nombre: nombre.trim(),
+        categoria: parseInt(categoria),
+        contratacion: anio,
+    });
+
+    alert(`Trabajador creado con código ${codigo}`);
+}
+function borrarTrabajador() {
+
+}
+
+
+
+
+
+/**
+ * Generar el código identificatorio
+ */
+function generarCodigo() {
+    
+    return 'E' + String(trabajadores.length).padStart(2, '0');
+}
+
+/**
+ * Validar Categoria
+ */
+function validarCategoria(categoria) {
+    let valido = true;
+    if (categoria != 1 || categoria != 2 || categoria != 3) {
+        valido = false;
+    }
+    return valido;
+}
+
+/**
+ * Validar año
+ */
+function validarAnio(anio) {
+    let valido = true;
+    if (anio.isInteger() || anio.trim() == '') {
+        valido = false;
+    }
+    return valido;
+}
+
+/**
+ * Validar nombre
+ */
+function validarNombre(nombre) {
+    let valido = true;
+    if (!nombre || nombre.trim() === '') {
+        valido = false;
+    }
+    return valido;
+}
