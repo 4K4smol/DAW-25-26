@@ -6,7 +6,7 @@
  *      entre comillas simples.
  *    • Muestra en un alert tu nombre y apellidos separados por un salto de línea.
  *    • Muestra en un alert la suma de las variables edad y año de nacimiento.
- *    • Muestra en un alert la suma de todas las variables. 
+ *    • Muestra en un alert la suma de todas las variables.
  */
 function crearVariables() {
     let cadena1 = 'Eloy';
@@ -72,7 +72,7 @@ function solicitarNumeros() {
 
     media = suma / total;
 
-    if (typeof(media) != Number) {
+    if (typeof (media) != Number) {
         alert('Sin datos suficientes');
         return;
     }
@@ -98,7 +98,7 @@ function rectanguloHueco(signo = '*') {
     for (let i = 0; i < lado; i++) {
         linea[i] = '';
         for (let j = 0; j < lado; j++) {
-            if (i == 0 || j == 0 || j == lado-1 || i == lado-1) {
+            if (i == 0 || j == 0 || j == lado - 1 || i == lado - 1) {
                 linea[i] += signo;
             } else {
                 linea[i] += ' ';
@@ -160,7 +160,7 @@ function rombo(signo = '*') {
     let linea = []; // Cadenas a agrupar
     let espacio_incremental = 0; // Espacio al principio y final lineas
 
-    for (let i = diagonalMenor; i > 0 ; i--) {
+    for (let i = diagonalMenor; i > 0; i--) {
         linea[i] = '';
 
         linea[i] = ' '.repeat(espacio_incremental) + signo.repeat(diagonalMenor) + ' '.repeat(espacio_incremental);
@@ -205,15 +205,15 @@ function figuraGeometrica() {
             case 0:
                 alert('Hasta nunca');
                 break;
-            
+
             case 1:
                 triangulo();
                 break;
-            
+
             case 2:
                 rectanguloHueco();
                 break;
-            
+
             case 3:
                 rombo();
                 break;
@@ -263,7 +263,7 @@ function tablaMultiplicarPorNumero() {
     for (let i = menor; i <= mayor; i++) {
         tabla[i] = '';
         for (let j = 1; j < 10; j++) {
-            linea[j] = `${i} * ${j} = ${j*i}\n`
+            linea[j] = `${i} * ${j} = ${j * i}\n`
             tabla[i] += linea[j];
         }
         tabla[i] += '\n';
@@ -283,104 +283,192 @@ function tablaMultiplicarPorNumero() {
  */
 function calcularFactorial() {
     let numero = 0;
+    let operacion = '';
+    let resultado = 1;
 
+    // Solicitar un número mayor a 1
     do {
         numero = Number(prompt(
-            'Seleccione una opcione:\n\t[0] => Salir\n\tCualquier número entre 100 y 1'
+            'Seleccione una opcione:\n\t[0] => Salir\n\tCualquier número mayor a 1'
         ));
 
-        if (numero < 1 || numero > 99) {
+        // Validación
+        if ((numero < 1) && numero != 0) {
+            alert('¿No sabe usted leer?')
+        }
+    } while (numero < 0)
 
-        } 
+    for (let i = numero; i > 0; i--) {
+        operacion += (i == 1) ? `${i}` : `${i}x`;
+        resultado *= i;
+    }
 
-    } while (numero != 0)
+    operacion += ` = ${resultado}`;
 
+    alert(operacion);
+}
+
+// calcularFactorial()
+
+
+/**
+ * 9-Crea una función que reciba un número variable de parámetros y que los agrupe por tipo.
+ * Después por cada tipo se mostrará el tipo y la colección de parámetros de ese tipo incluyendo
+ * la posición original entre los parámetros.
+ * Añade el código auxiliar necesario para probar la aplicación
+ */
+function discriminarVariables(...args) {
+    let variablesAgrupadas = {};
+
+    args.map((valor, index) => {
+        if (!variablesAgrupadas[typeof valor]) {
+            variablesAgrupadas[typeof (valor)] = [];
+        }
+
+        variablesAgrupadas[typeof (valor)].push({
+            'valor': valor,
+            'index': index
+        });
+    });
+
+    console.log(variablesAgrupadas);
+}
+
+// discriminarVariables('hola', true, 3.1, 4);
+
+/**
+ * 10-Crea una función que reciba una cadena de texto y que cuente el número de apariciones de
+ * cada carácter. Debe devolver un objeto de tipo clave-valor con el resultado.
+ * Añade el código auxiliar necesario para probar la aplicación
+ */
+function contadorCaracteres(cadena) {
+    let caracteresContador = [];
+
+    for (let i = 0; i < cadena.length; i++) {
+        if (!caracteresContador[cadena[i]]) {
+            caracteresContador[cadena[i]] = 0;
+        }
+
+        caracteresContador[cadena[i]] += 1;
+    }
+
+    return caracteresContador;
+}
+
+// console.log(contadorCaracteres('holaaahlll    -ñ+ * 中文'));
+
+/**
+ * 11- Crea una función que reciba un rango, para cada valor en el rango se informará de si el
+ * número es múltiplo de 3, si es múltiplo de 5 y si es número primo. Sólo mostrar información de
+ * los números que cumplan alguna de las condiciones.
+ * Añade el código auxiliar necesario para probar la aplicación.
+ */
+function informarRango(rango) {
+    let multiplo5 = false;
+    let multiplo3 = false;
+    let primo = false;
+    let modulo = 0;
+    let resultado = [];
+
+    if (rango == 0) {
+        console.log('El rango es incorrecto');
+    }
+
+    rango.map((valor) => {
+        multiplo5 = false;
+        multiplo3 = false;
+        primo = false;
+        modulo = 0;
+        resultado = '';
+
+        for (let i = valor; i > 0; i--) {
+            if (i == valor) {
+                if (valor % 5 == 0) multiplo5 = true;
+                if (valor % 3 == 0) multiplo3 = true;
+            }
+            if (valor % i == 0) modulo += 1;
+        }
+        if (modulo <= 2) primo = true;
+
+        if (multiplo5) resultado += (`El número ${valor} es múltiplo de 5\n`);
+        if (multiplo3) resultado += (`El número ${valor} es múltiplo de 3\n`);
+        if (primo) resultado += (`El número ${valor} es primico\n`);
+
+        if (resultado) {
+            console.log(resultado + "\n");
+        }
+    });
+}
+
+function rango(inicio, fin) {
+    let numeros = [];
+    for (let i = inicio; i <= fin; i++) {
+        numeros.push(i);
+    }
+    return numeros;
+}
+
+// informarRango(rango(1, 10));
+
+/**
+ * 12-Juego acertar número.
+ * Calcula un numero aleatorio entre 1 y 100, este número permanecerá secreto. Pide al usuario
+ * un numero en rango, el programa le dirá si es mayor o menor que el número secreto. Si el
+ * usuario acierta el número secreto gana. El usuario dispondrá de 5 intentos para acertar el
+ * número secreto, tras lo cual, el programa dirá que ha perdido y le mostrará el número secreto.
+ * Añade el código auxiliar necesario para probar la aplicación.
+ */
+function acertarNumero() {
+    let numeroMisterioso = randomEntre(1, 100)
+    let intentos = 0;
+    let terminar = false; // Variable para terminar juego
+    do {
+        intentos++;
+        let numeroElegido = Number(prompt(`Nº de Intento: ${intentos}\n\tAcierte el número misterioso:`));
+
+        if (numeroElegido == numeroMisterioso) {
+            alert(`Has acertado el misterioso número era el ${numeroMisterioso}`);
+            terminar = true;
+            continue;
+        }
+
+        (numeroElegido > numeroMisterioso)
+            ? alert(`El número ${numeroElegido} es mayor al número misterioro`)
+            : alert(`El número ${numeroElegido} es inferior al número misterioso`);
+
+        if (intentos == 5) {
+            terminar = true;
+        }
+
+    } while (!terminar);
+}
+
+// acertarNumero();
+
+/**
+ * FUNCION PARA GENERAR NUMERO ALEATORIO
+ */
+function randomEntre(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+
+/**
+ * 13-Juego mates
+ * Crea un programa que genere dos números aleatorios entre 1 y 10, y un operador aritmético.
+ * Se ofrecerá al usuario los valores para que calcule el resultado, y el programa le dirá si el
+ * resultado es correcto o incorrecto.
+ * Las preguntas, respuesta del usuario y si ha acertado o fallado se almacenarán ordenadamente
+ * en un array.
+ * Se preguntas se realizarán en lotes de 4, tras lo cual se consultará al usuario si desea continuar.
+ * Cuando el usuario no desee seguir jugando se mostrará un resumen de las preguntas (número,
+ * pregunta y acierto) así como el total de preguntas acertadas y el total de falladas.
+ * Añade el código auxiliar necesario para probar la aplicación
+ */
+function juegoMates() {
 
 }
 
-// function cuadrado (tamañao) {
-//     let linea = [];
-//     for(let i = 0; i < tamañao; i++) {
-//         linea[i] = []
-//         for(let j = 0; j < tamañao; j++) {
-//             linea[i] += '+';
-//         }
-//     }
-//     console.log(linea.join("\n"));
-// }
 
-// cuadrado(4);
-
-
-// function triangulo(altura) {
-//     let linea = [];
-
-//     let cantidad_signo = 1;
-//     let espacio = altura - 1;
-//     let signo = '*';
-
-//     for (let i = 0; i < altura; i++) {
-//         let fila = '';
-
-//         for (let j = 0; j < espacio; j++) {
-//             fila += ' ';
-//         }
-
-//         for (let j = 0; j < cantidad_signo; j++) {
-//             fila += signo;
-//         }
-
-//         linea.push(fila);
-
-//         cantidad_signo += 2;
-//         espacio -= 1;
-//     }
-
-//     console.log(linea.join("\n"));
-// }
-
-
-// triangulo(4);
-
-
-
-// function cuadradoVacio(lado, signo = '*') {
-//     let lineas = [];
-
-//     for (let i = 0; i < lado; i++) {
-//         let linea = '';
-//         for (let j = 0; j < lado; j++) {
-//             if (i === 0 || i === lado - 1 || j === 0 || j === lado - 1) {
-//                 linea += signo;
-//             } else {
-//                 linea += ' ';
-//             }
-//         }
-//         lineas.push(linea);
-//     }
-
-//     console.log(lineas.join('\n'));
-// }
-
-// cuadradoVacio(4, '[');
-
-// /** Triángulo vacío */
-// function trianguloVacio(base, signo = '*') {
-//     if (base < 3 || base % 2 == 0) {
-//         alert('no no no');
-//         return;
-//     }
-
-//     // Array del dibujo
-//     let lineas = [];
-
-//     // Base
-//     let linea_base = [];
-//     linea_base.push(...signo.repeat(base));
-
-
-
-
-// }
-
-// rombo(5);
+juegoMates();
