@@ -656,17 +656,17 @@ function imprimirNoPromocion(alumnos) {
 
 /**
  * 15-Crea un programa de gestión de personal.
- * La entidad “trabajador” tiene las propiedades: “código”, “nombre”, “categoría”, 
+ * La entidad “trabajador” tiene las propiedades: “código”, “nombre”, “categoría”,
  * “contratación”.
  * Donde:
- *  • Propiedad “código” tiene el formato “E01”, “E02” y es un valor único identificativo del 
+ *  • Propiedad “código” tiene el formato “E01”, “E02” y es un valor único identificativo del
  * trabajador. Se asigna automáticamente al crear el trabajador y no puede modificarse.
  *  • Propiedad “nombre” es el nombre del trabajador.
- *  • Propiedad “categoría” puede tomar los valores, 1, 2, 3 y representa el salario base a 
+ *  • Propiedad “categoría” puede tomar los valores, 1, 2, 3 y representa el salario base a
  * percibir. Donde 1-1100€, 2-1400€, 3-1900€
- *  • Propiedad “contratación” indica el año de contratación, necesario para calcular la 
+ *  • Propiedad “contratación” indica el año de contratación, necesario para calcular la
  * antigüedad.
- *  • El importe de la nomina se calcula en base a la categoría más un 4% por cada año de 
+ *  • El importe de la nomina se calcula en base a la categoría más un 4% por cada año de
  * antigüedad.
  * Se pide:
  * Almacenar en un array los datos de mis trabajadores.
@@ -675,7 +675,7 @@ function imprimirNoPromocion(alumnos) {
  *  • Borrar trabajador, solicitando el código y confirmación.
  *  • Modificar trabajador, solicitando el código y ofreciendo como valor por defecto el valor actual.
  *  • Calcular nóminas. Listado ordenado por categorías de nominas con un resumen del
- *      importe total de las nóminas de cada categoría, así como el resumen final del importe 
+ *      importe total de las nóminas de cada categoría, así como el resumen final del importe
  *      total de todas las nóminas de la empresa.
  * Consideraciones:
  *  • Puede/debes tener datos cacheados.
@@ -684,96 +684,222 @@ function imprimirNoPromocion(alumnos) {
  *  • Estructura y comenta el código.
  */
 
-// Datos globales 
+// Datos globales
 const trabajadores = [];
 
-
+/**
+ * Fución para gestionar personal
+ *  Lista - crear - editar - borrar
+ */
 function gestorPersonal() {
     // Generar Menú
+    let peticionUsuario = 0;
+    do {
+        peticionUsuario = Number(prompt(
+            "Gestor de Personal\n" +
+            "\t[1] Listar trabajadores\n" +
+            "\t[2] Crear trabajador\n" +
+            "\t[3] Editar trabajador\n" +
+            "\t[4] Borrar trabajador\n" +
+            "\t[0] Salir"
+        ));
+
+        switch (peticionUsuario) {
+            case 1:
+                listarTrabajadores();
+                break;
+            case 2:
+                crearTrabajador();
+                break;
+            case 3:
+                editarTrabajador();
+                break;
+            case 4:
+                borrarTrabajador();
+                break;
+            case 0:
+                alert('Hasta Luego');
+                break;
+
+            default:
+                alert('El menú no contempla esa acción.');
+                break;
+        }
+
+    } while (peticionUsuario !== 0);
 
 }
 
 function listarTrabajadores() {
+    if (trabajadores.length === 0) {
+        alert("No hay trabajadores.");
+        return;
+    }
 
-}
-function modificarTrabajador() {
+    const lista = trabajadores.map(t =>
+        `| Codigo: ${t.codigo} | Nombre: ${t.nombre} | Categoria: ${t.categoria} | Año Contratación ${t.contratacion} |`
+    ).join('\n');
 
+    console.log(lista);
 }
+
+/**
+ * Función para modificar trabajadores
+ */
+function editarTrabajador() {
+    let peticionCodigo = String(prompt('Indique el código del trabajador a modificar'));
+
+    // Hace referencia por lo que si cambia t cambia el objeto del array !!!
+    const t = trabajadores.find(x => x.codigo === peticionCodigo);
+
+    if (!t) {
+        alert('Trabajador no encontrado');
+        return;
+    }
+
+    alert(`Modificar trabajador ${t.codigo}`);
+
+    let nombre = prompt('Introduce el nombre del trabajador:', `${String(t.nombre)}`);
+    if (!validarNombre(nombre.trim())) {
+        alert('El nombre no puede estar vacío.');
+        return;
+    }
+
+    let categoria = prompt('Introduce la categoría (1, 2, 3):', `${String(t.categoria)}`);
+    if (categoria === null) return;
+    if (!validarCategoria(Number(categoria))) {
+        alert('Categoría inválida. Debe ser 1, 2 o 3.');
+        return;
+    }
+
+    let anio = prompt('Introduce el año de contratación (ej. 2020):', `${String(t.contratacion)}`);
+    if (anio === null) return;
+
+    if (!validarAnio(Number.parseInt(anio, 10))) {
+        alert('Año de contratación inválido.');
+        return;
+    }
+
+    // se modifica los valores
+    t.nombre = nombre;
+    t.categoria = categoria;
+    t.contratacion = anio;
+
+    alert('Se ha modificado el trabajador');
+}
+
 function crearTrabajador() {
     let nombre = prompt('Introduce el nombre del trabajador:');
-    if (!validarNombre(nombre)) {
+    if (!validarNombre(nombre.trim())) {
         alert('El nombre no puede estar vacío.');
         return;
     }
 
     let categoria = prompt('Introduce la categoría (1, 2, 3):');
-    if (!validarCategoria(categoria)) {
-        alert('Categoría inválida.');
+    if (categoria === null) return;
+    if (!validarCategoria(Number(categoria))) {
+        alert('Categoría inválida. Debe ser 1, 2 o 3.');
         return;
     }
 
     let anio = prompt('Introduce el año de contratación (ej. 2020):');
-    anio = parseInt(anio);
+    if (anio === null) return;
 
-    if (!validarAnio(anio)) {
+    // HACER DECIMAL
+    if (!validarAnio(Number.parseInt(anio, 10))) {
         alert('Año de contratación inválido.');
         return;
     }
 
+    const codigo = generarCodigo();
+
     trabajadores.push({
-        codigo: generarCodigo(),
-        nombre: nombre.trim(),
-        categoria: parseInt(categoria),
+        codigo,
+        nombre,
+        categoria,
         contratacion: anio,
     });
 
     alert(`Trabajador creado con código ${codigo}`);
 }
-function borrarTrabajador() {
 
+function borrarTrabajador() {
+    let peticionCodigo = String(prompt('Indique el código del trabajador a modificar'));
+
+    // Hace referencia por lo que si cambia t cambia el objeto del array !!!
+    const i = trabajadores.findIndex(x => x.codigo === peticionCodigo);
+
+    if (i === -1) {
+        alert('Trabajador no encontrado');
+        return;
+    }
+
+    const respuesta = confirm(`¿Quiere borrar el trabajador ${trabajadores[i].codigo}?`);
+
+    if (respuesta) {
+        trabajadores.splice(i, 1);
+        alert('Se ha borrado con éxito el trabajador');
+        return;
+    }
+
+    alert('No se ha eliminado el trabajador');
 }
 
-
-
-
+/**
+ * Función calcular nóminas
+ * Calcular nóminas. Listado ordenado por categorías de nominas con un resumen del
+ *      importe total de las nóminas de cada categoría, así como el resumen final del importe
+ *      total de todas las nóminas de la empresa.
+ */
+function calcularNominas() {
+    
+}
 
 /**
  * Generar el código identificatorio
  */
 function generarCodigo() {
-    
-    return 'E' + String(trabajadores.length).padStart(2, '0');
+    let ultimoCodigo = 0;
+
+    if (trabajadores.length === 0) return 'E01';
+
+    trabajadores.forEach(trabajador => {
+        let num = trabajador.codigo.slice(1); // quito la 'E'
+        if (num.charAt(0) === '0') {
+            num = num.slice(1);
+        }
+
+        if (ultimoCodigo < Number(num)) {
+            ultimoCodigo = Number(num);
+        }
+    });
+
+    return 'E' + (ultimoCodigo + 1 < 10
+        ? String(ultimoCodigo + 1).padStart(2, '0')
+        : String(ultimoCodigo + 1)
+    );
 }
 
 /**
  * Validar Categoria
  */
 function validarCategoria(categoria) {
-    let valido = true;
-    if (categoria != 1 || categoria != 2 || categoria != 3) {
-        valido = false;
-    }
-    return valido;
+    return Number.isInteger(categoria) && [1, 2, 3].includes(categoria);
 }
 
 /**
  * Validar año
  */
 function validarAnio(anio) {
-    let valido = true;
-    if (anio.isInteger() || anio.trim() == '') {
-        valido = false;
-    }
-    return valido;
+    const current = new Date().getFullYear();
+    return Number.isInteger(anio) && anio >= 1970 && anio <= current;
 }
 
 /**
  * Validar nombre
  */
 function validarNombre(nombre) {
-    let valido = true;
-    if (!nombre || nombre.trim() === '') {
-        valido = false;
-    }
-    return valido;
+    return nombre.trim().length > 0;
 }
+
+gestorPersonal();
