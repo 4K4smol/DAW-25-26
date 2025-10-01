@@ -701,6 +701,7 @@ function gestorPersonal() {
             "\t[2] Crear trabajador\n" +
             "\t[3] Editar trabajador\n" +
             "\t[4] Borrar trabajador\n" +
+            "\t[5] Calcular Nóminas\n" +
             "\t[0] Salir"
         ));
 
@@ -717,6 +718,9 @@ function gestorPersonal() {
             case 4:
                 borrarTrabajador();
                 break;
+            case 5:
+                calcularNominas();
+                break;
             case 0:
                 alert('Hasta Luego');
                 break;
@@ -730,6 +734,9 @@ function gestorPersonal() {
 
 }
 
+/**
+ * Función para listar trabajadores
+ */
 function listarTrabajadores() {
     if (trabajadores.length === 0) {
         alert("No hay trabajadores.");
@@ -788,6 +795,9 @@ function editarTrabajador() {
     alert('Se ha modificado el trabajador');
 }
 
+/**
+ * Funcion para crear trabajadores
+ */
 function crearTrabajador() {
     let nombre = prompt('Introduce el nombre del trabajador:');
     if (!validarNombre(nombre.trim())) {
@@ -823,6 +833,9 @@ function crearTrabajador() {
     alert(`Trabajador creado con código ${codigo}`);
 }
 
+/**
+ * Funcion para Borrar
+ */
 function borrarTrabajador() {
     let peticionCodigo = String(prompt('Indique el código del trabajador a modificar'));
 
@@ -847,12 +860,40 @@ function borrarTrabajador() {
 
 /**
  * Función calcular nóminas
- * Calcular nóminas. Listado ordenado por categorías de nominas con un resumen del
- *      importe total de las nóminas de cada categoría, así como el resumen final del importe
- *      total de todas las nóminas de la empresa.
  */
 function calcularNominas() {
-    
+    if (trabajadores.length === 0) {
+        alert("No hay trabajadores.");
+        return;
+    }
+    // Variables
+    const categorias = [undefined, 1100, 1400, 1900];
+    let listaPorCategorias = '';
+    let sumarTotal = 0;
+
+    for (let i = 1; i < categorias.length; i++) {
+        let sumaNominaCategoria = 0;
+
+        listaPorCategorias += `Categoria ${i}:\n`;
+        trabajadores.forEach(t => {
+            let nomina = 0;
+            if (t.categoria == i) {
+                listaPorCategorias += `\t   | Codigo: ${t.codigo} | Nombre: ${t.nombre} | Categoria: ${t.categoria} | Año Contratación ${t.contratacion} | `
+
+                // Calculo Nóminas
+                nomina = (categorias[i] * (0.04 * diferenciaFechaActual(t.contratacion))) + categorias[i];
+                listaPorCategorias += `Nómina: ${nomina.toFixed(2)}$\n`;
+                sumaNominaCategoria += Number(nomina.toFixed(2));
+            }
+        });
+        listaPorCategorias += `Total Nóminas: ${sumaNominaCategoria}$\n\n`;
+
+        sumarTotal += Number(sumaNominaCategoria);
+    }
+
+    listaPorCategorias += `Total Nóminas Empresa: ${sumarTotal}$`;
+
+    console.log(listaPorCategorias);
 }
 
 /**
@@ -881,6 +922,14 @@ function generarCodigo() {
 }
 
 /**
+ * Función diferencia de años fecha
+ */
+function diferenciaFechaActual(fecha) {
+    let fechaActual = new Date();
+    return Math.floor((fechaActual - new Date(String(fecha))) / (1000 * 60 * 60 * 24 * 365));
+}
+
+/**
  * Validar Categoria
  */
 function validarCategoria(categoria) {
@@ -902,4 +951,4 @@ function validarNombre(nombre) {
     return nombre.trim().length > 0;
 }
 
-gestorPersonal();
+// gestorPersonal();
