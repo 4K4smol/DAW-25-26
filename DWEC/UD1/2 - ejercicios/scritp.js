@@ -9,13 +9,17 @@
  */
 function comprobarAnagramas(palabra1, palabra2) {
     let anagrama = true;
-    if (palabra1.length == palabra2.length) return true;
-    for (let i = 0; i < palabra1.length; i++) {
-        for (let j = 0; j < palabra2.length; j++) {
-            if (palabra1.charAt(i) == a)
-        }
+
+    if (palabra1.lentgh != palabra2.lentgh) {
+        return false;
     }
+
+    console.log(palabra1.split(''))
+    for (let i = 0; i < palabra1.lentgh; i++) {
+
+    }
+
     return false;
 }
 
-console.log(comprobarAnagramas('hola', 'bb'));
+console.log(comprobarAnagramas('hola', 'bbb'));
