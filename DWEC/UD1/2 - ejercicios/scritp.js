@@ -45,13 +45,13 @@ function sucesionFibonacci(entero) {
             continue;
         }
 
-        siguienteNumero = sucesion[sucesion.length-2] + sucesion[sucesion.length-1];
+        siguienteNumero = sucesion[sucesion.length - 2] + sucesion[sucesion.length - 1];
     } while (true);
 
     return sucesion;
 }
 
-// console.log(sucesionFibonacci(13));
+// console.log(sucesionFibonacci(1));
 
 
 /**
@@ -118,17 +118,36 @@ function codificarDescodificarMoser(multiCadena) {
      */
     const morse = ['.', '-'].includes(cadena.charAt(0));
 
+    // texto => Morse
     if (!morse) {
         for (let i = 0; i < cadena.length; i++) {
             let caracter = cadena.charAt(i);
-            cadenaResultado += alfabetoMorse[caracter] + '  ';
+
+            if (caracter === " ") {
+                // separador de palabras
+                cadenaResultado += "  "; // por ejemplo 3 espacios
+            } else if (alfabetoMorse[caracter]) {
+                cadenaResultado += alfabetoMorse[caracter] + "";
+            }
+            // si no está en el diccionario, no añadimos nada
         }
+
 
         return cadenaResultado;
     }
 
+    // Morse => Texto
+    let caracteres = cadena.split("  "); // separas letras por doble espacio
+    console.log(caracteres);
+
+    for (let caracter of caracteres) {
+        caracter = caracter.trim();
+        let letra = Object.keys(alfabetoMorse)
+            .find(key => alfabetoMorse[key] === caracter);
+        cadenaResultado += letra || '';
+    }
 
     return cadenaResultado;
 }
 
-console.log(codificarDescodificarMoser('Hol a'));
+console.log(codificarDescodificarMoser('· —  · —'));
