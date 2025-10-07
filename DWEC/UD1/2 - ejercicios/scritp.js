@@ -210,7 +210,7 @@ function factorialRecursivo(numero) {
  * Siempre comienzan las “X”, de manera aleatoria se elegirá si comienza el humano o la máquina.
  */
 function tresRaya() {
-    const matriz = [['', '', ''], ['', '', ''], ['', '', '']];
+    const matriz = [['x', 'x', ''], ['o', 'o', ''], ['', '', '']];
     // Quien empiza
     const empiezaHumano = randomEntre(0, 1) === 0;
     // Siempre empiezan las X
@@ -220,30 +220,83 @@ function tresRaya() {
     let turno = "x"; // X siempre juega primero
     let terminar = false;
 
-    do {
-        dibujarTablero(matriz); // Info tablero
+    console.log(ponerMaquina(matriz, "o"));
 
-        // Según turno
-        if (turno === fichaHumano) {
-            const colocado = ponerHumano(matriz, fichaHumano);
-            if (!colocado) {
-                alert("Movimiento inválido. Inténtalo de nuevo.");
-                continue; // no se cambia turno si no coloca
-            }
-        } else {
-            ponerMaquina(matriz, fichaMaquina);
-        }
+    // do {
+    //     dibujarTablero(matriz); // Info tablero
 
-        // Cambiar turno
-        turno = turno === "x" ? "o" : "x";
+    //     // Según turno
+    //     if (turno === fichaHumano) {
+    //         const colocado = ponerHumano(matriz, fichaHumano);
+    //         if (!colocado) {
+    //             alert("Movimiento inválido. Inténtalo de nuevo.");
+    //             continue; // no se cambia turno si no coloca
+    //         }
+    //     } else {
+    //         ponerMaquina(matriz, fichaMaquina);
+    //     }
 
-    } while (!terminar);
+    //     // Cambiar turno
+    //     turno = turno === "x" ? "o" : "x";
+
+    // } while (!terminar);
 
 
 
 }
+tresRaya();
+
 function comprobarEstado(matriz) {
 
+}
+
+function movimientoGanador(matriz, posicionesMaquina) {
+    if (
+        posicionesMaquina.length == 2
+        
+    ) {
+
+    }
+}
+
+function movimientoBloqueo(matriz, posicionesJugador) {
+
+}
+
+function movimientoAleatorio(matriz) {
+
+}
+
+/**
+ * Función añadir al azar
+ */
+function meterAzar(x = null, y = null, matriz, ficha) {
+    if (x !== null) {
+        let col;
+        do {
+            col = randomEntre(0, 2);
+        } while (matriz[x][col] != '');
+
+        matriz[x][col] = ficha;
+    } else if (y !== null) {
+        let fila;
+        do {
+            fila = randomEntre(0, 2);
+        } while (matriz[fila][y] != '');
+
+        matriz[fila][y] = ficha;
+    } else {
+        let col;
+        let fila;
+        do {
+            col = randomEntre(0, 2);
+            fila = randomEntre(0, 2);
+        } while (matriz[fila][col] != '');
+
+        matriz[fila][col] = ficha;
+    }
+
+    return matriz;
 }
 
 /**
@@ -252,16 +305,56 @@ function comprobarEstado(matriz) {
  * 3) Si no, coloca en una celda vacía aleatoria.
  */
 function ponerMaquina(matriz, ficha) {
-    // impedir cruz en raya
     const obtenerPosicionesJugador = [];
+    const obtenerPosicionesMaquina = [];
 
-    for (let i = 0; i < 2; i++) {
-        for (let j = 0; j < 2; j++) {
+    // Bloquear
+        // Comprobar lineas
+    for (let i = 0; i <= 2; i++) {
+        for (let j = 0; j <= 2; j++) {
             if (matriz[i][j] == ficha) {
+                obtenerPosicionesMaquina.push([i, j]);
+            } else if (
+                matriz[i][j] != ficha 
+                && matriz[i][j] != ''
+            ) {
                 obtenerPosicionesJugador.push([i, j]);
             }
         }
+        if (obtenerPosicionesMaquina.length == 2) {
+            return meterAzar(i, null, matriz, ficha);
+        } else if (obtenerPosicionesJugador.length == 2) {
+            return meterAzar(i, null, matriz, ficha);
+        }
+        obtenerPosicionesJugador.length = 0;
+        obtenerPosicionesMaquina.length = 0;
     }
+        // comprobar columnas
+    for (let i = 0; i <= 2; i++) {
+        for (let j = 0; j <= 2; j++) {
+            if (
+                matriz[j][i] != ficha 
+                || matriz[j][i] != ''
+            ) {
+                obtenerPosicionesJugador.push([j, i]);
+            } else if (matriz[i][j] == ficha) {
+                obtenerPosicionesMaquina.push([j, i]);
+            }
+        }
+        if (obtenerPosicionesMaquina.length == 2) {
+            return meterAzar(null, j, matriz, ficha);
+        } else if (obtenerPosicionesJugador.length == 2) {
+            return meterAzar(null, j, matriz, ficha);
+        }
+        obtenerPosicionesJugador.length = 0;
+        obtenerPosicionesMaquina.length = 0;
+    }
+
+    return matriz
+
+
+
+
     // [0, 1], [1, 0], [1, 2], [2, 1]
     // [0, 0], [0, 2], [2, 0], [2, 2]
     // [1, 1] Centro
@@ -282,7 +375,9 @@ function ponerMaquina(matriz, ficha) {
         y = randomEntre(0, 2);
     } while (matriz[x][y] != '');
 
-    return matriz[x][y].push(ficha);
+    matriz[x][y] = ficha
+
+    return matriz;
 }
 
 function ponerHumano(matriz, x, y, ficha) {
@@ -293,7 +388,6 @@ function dibujarTablero(matriz) {
     return matriz;
 }
 
-console.log(dibujarTablero([['', '', ''], ['', '', ''], ['', '', '']]));
 
 function randomEntre(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
