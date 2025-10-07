@@ -210,21 +210,32 @@ function factorialRecursivo(numero) {
  * Siempre comienzan las “X”, de manera aleatoria se elegirá si comienza el humano o la máquina.
  */
 function tresRaya() {
-    const fichas = ['x', 'y'];
     const matriz = [['', '', ''], ['', '', ''], ['', '', '']];
-    const tipoJugador = ['jugador', 'maquina'];
-
     // Quien empiza
-    let jugadorEmpieza = randomEntre(0, 1);
+    const empiezaHumano = randomEntre(0, 1) === 0;
+    // Siempre empiezan las X
+    const fichaHumano = empiezaHumano ? "x" : "o";
+    const fichaMaquina = empiezaHumano ? "o" : "x";
 
+    let turno = "x"; // X siempre juega primero
     let terminar = false;
 
     do {
-        tipoJugador[jugadorEmpieza] == 'jugador'
-            ? ponerHumano()
-            : ponerMaquina();
+        dibujarTablero(matriz); // Info tablero
 
-    
+        // Según turno
+        if (turno === fichaHumano) {
+            const colocado = ponerHumano(matriz, fichaHumano);
+            if (!colocado) {
+                alert("Movimiento inválido. Inténtalo de nuevo.");
+                continue; // no se cambia turno si no coloca
+            }
+        } else {
+            ponerMaquina(matriz, fichaMaquina);
+        }
+
+        // Cambiar turno
+        turno = turno === "x" ? "o" : "x";
 
     } while (!terminar);
 
@@ -235,6 +246,11 @@ function comprobarEstado(matriz) {
 
 }
 
+/**
+ * 1) Si puede ganar en un movimiento, lo hace.
+ * 2) Si el rival puede ganar en su próximo movimiento, lo bloquea.
+ * 3) Si no, coloca en una celda vacía aleatoria.
+ */
 function ponerMaquina(matriz, ficha) {
     // impedir cruz en raya
     const obtenerPosicionesJugador = [];
