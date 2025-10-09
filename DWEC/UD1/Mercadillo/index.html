@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercadillo Domingueros
+    </title>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+    <h1 class="title">Mercadillo</h1>
+    <table class="tabla-mercadillo">
+        <tr>
+            <td>Nombre</td>
+            <td>Categoría</td>
+            <td>Cantidad</td>
+            <td>Precio</td>
+            <td>Acciones</td>
+        </tr>
+    </table>
+    <fieldset>
+        <legend>Imprimir inventario</legend>
+        <button id="btn-imprimir" type="button">Imprimir</button>
+    </fieldset>
+    <h2>Salida</h2>
+    <div id="salida"></div>
+
+    <script>
+        window.addEventListener("load", () => {
+            const $ = (id) => document.getElementById(id);
+            const salida = $("resultado");
+            const renderJSON = (data) => {
+                salida.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            };
+            $("btn-imprimir").addEventListener("click", () => {
+                renderJSON($negocio.imprimirInventario());
+            });
+        });
+    </script>
+
+</body>
+
+</html>
