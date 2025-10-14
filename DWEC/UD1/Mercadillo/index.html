@@ -1,37 +1,102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mercadillo Domingueros</title>
-  <script src="app.js" defer></script>
-  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@2/css/pico.min.css">
+    <meta charset="utf-8" />
+    <title>UD2E2 Mercadillo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="./app.js"></script>
+    <script src="./load.js"></script>
 </head>
 
 <body>
-  <h1 class="title">Mercadillo</h1>
+    <h1>Mercadillo</h1>
 
-  <div class="mercadillo-header">
-    <div>Nombre</div>
-    <div>Categoría</div>
-    <div>Cantidad</div>
-    <div>Precio</div>
-    <div>Acciones</div>
-  </div>
+    <fieldset>
+        <legend>Agregar producto</legend>
+        <div class="row">
+            <div>
+                <label>Nombre</label>
+                <input id="agregar-nombre" />
+            </div>
+            <div>
+                <label>Cantidad</label>
+                <input id="agregar-cantidad" type="number" value="1" />
+            </div>
+            <div>
+                <label>Precio</label>
+                <input id="agregar-precio" type="number" step="0.01" value="0" />
+            </div>
+            <div>
+                <label>Categoría</label>
+                <input id="agregar-categoria" />
+            </div>
+        </div>
+        <div class="controls">
+            <button id="btn-agregar">Agregar</button>
+        </div>
+    </fieldset>
 
-  <div id="lista-mercadillo" class="mercadillo-lista">
-  </div>
+    <fieldset>
+        <legend>Eliminar producto</legend>
+        <label>Nombre</label>
+        <input id="eliminar-nombre" />
+        <div class="controls">
+            <button id="btn-eliminar">Eliminar</button>
+        </div>
+    </fieldset>
 
-  <div class="inventario-container">
-    <h2>Imprimir inventario</h2>
-    <button id="btn-imprimir" type="button">Imprimir</button>
-  </div>
+    <fieldset>
+        <legend>Buscar producto</legend>
+        <label>Nombre</label>
+        <input id="buscar-nombre" />
+        <div class="controls">
+            <button id="btn-buscar">Buscar</button>
+        </div>
+    </fieldset>
 
-  <h2>Salida</h2>
-  <div id="salida"></div>
+    <fieldset>
+        <legend>Actualizar inventario</legend>
+        <div class="row">
+            <div>
+                <label>Nombre</label>
+                <input id="actualizar-nombre" />
+            </div>
+            <div>
+                <label>Cantidad (+ añade, descuenta)</label>
+                <input id="actualizar-cantidad" type="number" value="1" />
+            </div>
+        </div>
+        <div class="controls">
+            <button id="btn-actualizar">Aplicar</button>
+        </div>
+    </fieldset>
 
-  <script src="load.js"></script>
+    <fieldset>
+        <legend>Ordenar por precio (ascendente)</legend>
+        <div class="controls">
+            <button id="btn-ordenar">Ordenar</button>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Informe de inventario</legend>
+        <div class="controls">
+            <button id="btn-imprimir">Imprimir</button>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Filtrar por categoría</legend>
+        <label>Categoría (contiene)</label>
+        <input id="filtrar-categoria" />
+        <div class="controls">
+            <button id="btn-filtrar">Filtrar</button>
+        </div>
+    </fieldset>
+
+    <h2>Resultados</h2>
+    <div id="salida">—</div>
 </body>
 
 </html>
