@@ -1,6 +1,7 @@
 const $negocio = (() => {
     // Definir Variables
-    const inventario = [];
+    // Usamos objeto en lugar de array para claves por nombre
+    const inventario = {};
 
     /**
      * Función para añadir un producto
@@ -12,11 +13,11 @@ const $negocio = (() => {
      * @returns {Array<Object>} Inventario
      */
     function agregarProducto(nombre, cantidad, precio, categoria) {
-        if (inventario[nombre] > 0) return alert('Ya existe este producto');
-
-        return inventario[nombre] = { categoria, cantidad, precio };
+        if (inventario[nombre]) return alert('Ya existe este producto');
+        inventario[nombre] = { categoria, cantidad, precio };
+        return inventario[nombre];
     }
-    
+
     /**
      * Función para eliminar un producto
      * 
@@ -28,20 +29,22 @@ const $negocio = (() => {
         delete inventario[nombre];
     }
 
-
     function buscarProducto(nombre) {
-        return jsonString = JSON.stringify(inventario[nombre] ? { nombre, ...inventario[nombre] } : null);
+        return JSON.stringify(inventario[nombre] ? { nombre, ...inventario[nombre] } : null);
     }
 
     function actualizarInventario(nombre, cantidad) {
-        if (inventario[nombre] == 0) return alert('El producto no existe'); 
+        if (!inventario[nombre]) return alert('El producto no existe');
         if (cantidad <= 0) return alert('Se debe reponer el producto');
-        const productoActualizar = inventario.findIndex(producto => producto.nombre === nombre);
-        return inventario[productoActualizar].cantidad = cantidad
+        inventario[nombre].cantidad = cantidad;
+        return inventario[nombre].cantidad;
     }
 
     function ordenarProductosPorPrecio() {
-
+        // Devuelve un array de productos [{nombre, categoria, cantidad, precio}] ordenado por precio asc.
+        return Object.entries(inventario)
+            .map(([nombre, p]) => ({ nombre, ...p }))
+            .sort((a, b) => a.precio - b.precio);
     }
 
     /**
@@ -50,8 +53,8 @@ const $negocio = (() => {
      * @returns {JSON} Inventario
      */
     function imprimirInventario() {
-        inventarioTotales = Object.entries(inventario).map(([nombre, producto]) => {
-            const total = producto.cantidad * producto.precio
+        const inventarioTotales = Object.entries(inventario).map(([nombre, producto]) => {
+            const total = producto.cantidad * producto.precio;
             return {
                 nombre,
                 categoria: producto.categoria,
@@ -60,7 +63,7 @@ const $negocio = (() => {
                 total: Number(total.toFixed(2))
             };
         });
-        return jsonString = JSON.stringify(inventarioTotales);
+        return JSON.stringify(inventarioTotales);
     }
 
     /**
@@ -69,9 +72,11 @@ const $negocio = (() => {
      * @param {string} categoria Categoría de los productos a filtrar
      */
     function filtrarProductosPorCategoria(categoria) {
-        
+        const cat = String(categoria || '').toLowerCase();
+        return Object.entries(inventario)
+            .filter(([, p]) => (p.categoria || '').toLowerCase().includes(cat))
+            .map(([nombre, p]) => ({ nombre, ...p }));
     }
-
 
     return {
         agregarProducto,
