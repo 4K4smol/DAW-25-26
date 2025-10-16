@@ -50,7 +50,14 @@
   .fila2 {
     display:flex;
   }
-
+  .color {
+    background-color: #5b5959 !important;
+    color: white;
+    margin: 20px;
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+  }
   .verde {
     background-color: green;
   }
@@ -62,5 +69,17 @@
   }
   .amarillo {
     background-color: yellow;
-    color:black;
+  }
+
+  .racha {
+    width: 40px;
+    margin: 10px;
+  }
+
+  .segundos-encendido {
+    width: 40px;
+  }
+
+  .comenzar {
+    cursor: pointer;
   }

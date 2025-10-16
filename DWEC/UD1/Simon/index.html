@@ -1,42 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Juego Simon</title>
   <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+  <script src="load.js"></script>
 </head>
+
 <body>
   <div class="contenedor">
     <div class="columna izquierda">
 
-        <h1>Zona de Juego</h1>
-        <div class="tablero">
-            <div class="fila1">
-                <div class="verde">verde</div>
-                <div class="rojo">rojo</div>
-            </div>
-            <div class="fila2">
-                <div class="azul">azul</div>
-                <div class="amarillo">amarillo</div>
-            </div>
+      <h1>¿Simón?</h1>
+      <div id="tablero" class="tablero" aria-label="Tablero del juego Simon">
+        <div class="fila">
+          <button id="btn-verde" class="color verde" type="button">Verde</button>
+          <button id="btn-rojo" class="color rojo" type="button">Rojo</button>
         </div>
+        <div class="fila">
+          <button id="btn-azul" class="color azul" type="button">azul</button>
+          <button id="btn-amarillo" class="color amarillo" type="button">Amarillo</button>
+        </div>
+      </div>
+
 
     </div>
     <div class="columna derecha">
 
-        <h2>Panel de Información y Control</h2><br><br>
-        <div id="input-milisegundos-encendido">
-            <label>Milisegundos de encendido</label>
-            <input class="milisegundos-encendido" /><br>
-            <label></label>
-            <input class="milisegundos-encendido" /><br>
-        </div>
+      <h2>Panel de Información y Control</h2><br><br>
+      <div id="input-segundos">
+        <label>Segundos de encendido</label>
+        <input class="segundos-encendido" type="number" min="0" /><br>
+        <label>Segundos entre encendido</label>
+        <input class="segundos-encendido" type="number" min="0" /><br>
+      </div><br><br>
 
-        <div class="input-">
+      <div class="inforamcion">
+        <label>¡Mejor Racha!</label>
+        <input id="mejor-racha" class="racha" type="number" min="0" disabled>
+        <fieldset>
+          <legend>Partida actual</legend>
+          <div class="inforamcion-racha-actual">
+            <label>Aciertos</label>
+            <input id="racha-actual-aciertos" class="racha" type="number" min="0" disabled>
+            /
+            <input id="racha-actual-rondas" class="racha" type="number" min="0" disabled>
+            <label>Rondas</label>
+          </div>
+        </fieldset>
 
-        </div>
+      </div>
+
+      <br><br>
+
+      <div class="control">
+        <button type="button" id="comenzar" class="comenzar">Comenzar</button>
+      </div>
+
+      <div class="input-">
+
+      </div>
 
     </div>
   </div>
 </body>
+
 </html>
