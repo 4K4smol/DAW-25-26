@@ -1,70 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Juego Simon</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="app.js"></script>
-  <script src="load.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Juego Simón</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
+  <script src="load.js" defer></script>
 </head>
-
 <body>
   <div class="contenedor">
+    <!-- Columna izquierda: tablero -->
     <div class="columna izquierda">
-
       <h1>¿Simón?</h1>
-      <div id="tablero" class="tablero" aria-label="Tablero del juego Simon">
+
+      <div id="tablero" class="tablero" aria-label="Tablero del juego Simón" role="group">
         <div class="fila">
-          <button id="btn-verde" class="color verde" type="button">Verde</button>
-          <button id="btn-rojo" class="color rojo" type="button">Rojo</button>
+          <button id="btn-verde" class="color verde" type="button" aria-label="Verde">Verde</button>
+          <button id="btn-rojo" class="color rojo" type="button" aria-label="Rojo">Rojo</button>
         </div>
         <div class="fila">
-          <button id="btn-azul" class="color azul" type="button">azul</button>
-          <button id="btn-amarillo" class="color amarillo" type="button">Amarillo</button>
+          <button id="btn-azul" class="color azul" type="button" aria-label="Azul">Azul</button>
+          <button id="btn-amarillo" class="color amarillo" type="button" aria-label="Amarillo">Amarillo</button>
         </div>
       </div>
-
-
     </div>
+
     <div class="columna derecha">
+      <h2>Panel de Información y Control</h2>
 
-      <h2>Panel de Información y Control</h2><br><br>
-      <div id="input-segundos">
-        <label>Segundos de encendido</label>
-        <input class="segundos-encendido" type="number" min="0" /><br>
-        <label>Segundos entre encendido</label>
-        <input class="segundos-encendido" type="number" min="0" /><br>
-      </div><br><br>
+      <div id="input-tiempos" class="bloque">
+        <label for="ms-encendido">segundos de encendido</label>
+        <input id="ms-encendido" type="number" min="50" step="50" value="600" /><br />
 
-      <div class="inforamcion">
-        <label>¡Mejor Racha!</label>
-        <input id="mejor-racha" class="racha" type="number" min="0" disabled>
+        <label for="ms-entre">segundos entre encendidos</label>
+        <input id="ms-entre" type="number" min="0" step="50" value="300" />
+      </div>
+
+      <div class="informacion bloque">
+        <label for="mejor-racha">¡Mejor racha!</label>
+        <input id="mejor-racha" class="racha" type="number" min="0" value="0" disabled />
+
         <fieldset>
           <legend>Partida actual</legend>
-          <div class="inforamcion-racha-actual">
-            <label>Aciertos</label>
-            <input id="racha-actual-aciertos" class="racha" type="number" min="0" disabled>
-            /
-            <input id="racha-actual-rondas" class="racha" type="number" min="0" disabled>
-            <label>Rondas</label>
+          <div class="informacion-racha-actual">
+            <label for="racha-actual-aciertos">Aciertos</label>
+            <input id="racha-actual-aciertos" class="racha" type="number" min="0" value="0" disabled />
+            <span>/</span>
+            <input id="racha-actual-rondas" class="racha" type="number" min="0" value="0" disabled />
+            <label for="racha-actual-rondas">Rondas</label>
           </div>
         </fieldset>
-
       </div>
 
-      <br><br>
-
-      <div class="control">
+      <div class="control bloque">
         <button type="button" id="comenzar" class="comenzar">Comenzar</button>
       </div>
-
-      <div class="input-">
-
-      </div>
-
     </div>
   </div>
 </body>
-
 </html>

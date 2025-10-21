@@ -1,85 +1,67 @@
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+/* Reset básico */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; font-family: Arial, sans-serif; }
 
-  body, html {
-    height: 100%;
-    font-family: Arial, sans-serif;
-  }
+/* Layout general */
+.contenedor { display: flex; height: 100vh; }
+.columna { width: 50%; padding: 20px; }
 
-  .contenedor {
-    display: flex;
-    height: 100vh;
-  }
+/* Columna izquierda: juego */
+.izquierda {
+  background-color: #222;
+  color: #fff;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+}
 
-  .columna {
+/* Columna derecha: panel */
+.derecha {
+  background-color: #f7f7f7;
+  border-left: 3px solid #ccc;
+  display: flex; flex-direction: column;
+  justify-content: center; padding-left: 50px;
+}
 
-    width: 50%;
-    padding: 20px;
-  }
+/* Tablero */
+.tablero { margin: 40px 0; display: flex; flex-direction: column; gap: 16px; }
+.fila { display: flex; gap: 16px; }
 
-  .izquierda {
-    background-color: #222;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+/* Botones de color: gris por defecto (apagado) */
+.color {
+  background-color: #5b5959;
+  color: #fff;
+  cursor: pointer;
+  width: 120px; height: 120px;
+  border: none; border-radius: 16px;
+  font-weight: bold;
+  user-select: none;
+  transition: filter 120ms ease, transform 80ms ease, background-color 120ms ease;
+  outline: none;
+}
 
-  .derecha {
-    background-color: #f7f7f7;
-    border-left: 3px solid #ccc;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 50px;
-  }
+/* Feedback al pulsar/hover */
+.color:active { transform: scale(0.98); }
+.color:hover { filter: brightness(1.05); }
 
-  .tablero {
-    margin: 50px;
-    display:flex;
-    flex-direction: column;
-  }
+/* Iluminado: el color solo aparece cuando está activo */
+.color.verde.activo { background-color: green; }
+.color.rojo.activo { background-color: red; }
+.color.azul.activo { background-color: blue; }
+.color.amarillo.activo { background-color: yellow; }
+.color.activo { filter: brightness(1.15); }
 
-  .fila1 {
-    display:flex;
-  }
-  .fila2 {
-    display:flex;
-  }
-  .color {
-    background-color: #5b5959 !important;
-    color: white;
-    margin: 20px;
-    cursor: pointer;
-    height: 50px;
-    width: 100px;
-  }
-  .verde {
-    background-color: green;
-  }
-  .rojo {
-    background-color: red;
-  }
-  .azul {
-    background-color: blue;
-  }
-  .amarillo {
-    background-color: yellow;
-  }
+/* Inputs de racha */
+.racha { width: 60px; margin: 10px; text-align: center; }
 
-  .racha {
-    width: 40px;
-    margin: 10px;
-  }
+/* Inputs de tiempos (si los usas) */
+#input-tiempos input { width: 100px; margin: 6px 0 12px; }
 
-  .segundos-encendido {
-    width: 40px;
-  }
-
-  .comenzar {
-    cursor: pointer;
-  }
+/* Botón comenzar */
+.comenzar {
+  cursor: pointer;
+}
+.comenzar:hover { filter: brightness(1.05); }
+.comenzar:active { transform: scale(0.98); }
+.comenzar:focus-visible {
+  box-shadow: 0 0 0 4px #fff, 0 0 0 6px #7c3aed;
+}
