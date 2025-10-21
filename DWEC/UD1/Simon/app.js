@@ -8,6 +8,8 @@ const $simon = (() => {
     let posicionActual = 0;
     let mejorRacha = 0;
     let mostrandoSecuencia = false;
+    let tiempoEncendidoSegundos = 0;
+    let tiempoEntreSegundos = 0;
     const colores = ["verde", "rojo", "azul", "amarillo"];
 
     function getSecuenciaColoresActual() { return [...secuencia]; }
@@ -17,16 +19,8 @@ const $simon = (() => {
 
     // recoger los segundos
     function setTiempos(encendidoSegundos, entreSegundos) {
-        let tiempoEncendidoSegundos = 0;
-        let tiempoEntreSegundos;
-        
-        // Sanitiza y limita a rangos razonables
-        if (Number.isFinite(encendidoSegundos)) {
-            tiempoEncendidoSegundos = Math.max(50, Math.min(5000, Math.floor(encendidoSegundos)));
-        }
-        if (Number.isFinite(entreSegundos)) {
-            tiempoEntreSegundos = Math.max(0, Math.min(5000, Math.floor(entreSegundos)));
-        }
+        tiempoEncendidoSegundos = encendidoSegundos;
+        tiempoEntreSegundos = entreSegundos;
     }
 
     function comenzarJuego() {
@@ -45,6 +39,7 @@ const $simon = (() => {
     }
 
     function mostrarSecuencia() {
+        console.log(tiempoEntreSegundos);
         mostrandoSecuencia = true; // Impide pulsaciones mientras se muestra
 
         const botones = {
@@ -111,10 +106,10 @@ const $simon = (() => {
         getMejorRacha,
         getPosicionRachaActual,
         getEstadoJuego,
+        // setter
+        setTiempos,
         // acciones
         comenzarJuego,
         comprobarUltimoColorPulsado,
-        // >>> expone el setter de tiempos
-        setTiempos,
     };
 })();
