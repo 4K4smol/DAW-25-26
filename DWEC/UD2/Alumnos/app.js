@@ -8,8 +8,8 @@ const $yedra = (() => {
         { nombre: "Héctor", nota: 2.5, modulo: "DWES", convocatorias: 4 }
     ];
 
-    function listaAlumnosSuspensos(alumnos) {
-        return JSON.stringify(alumnos.filter(a => a.nota < 5).map(a => ({
+    function listaAlumnosSuspensos(datos = alumnos) {
+        return JSON.stringify(datos.filter(a => a.nota < 5).map(a => ({
             nombre: a.nombre,
             nota: a.nota,
             modulo: a.modulo
@@ -18,10 +18,10 @@ const $yedra = (() => {
 
     // console.log(listaAlumnosSuspensos(alumnos));
 
-    function estadisticaPorModulo(alumnos) {
+    function estadisticaPorModulo(datos = alumnos) {
         const estadisticasModulos = {};
 
-        alumnos.forEach(a => {
+        datos.forEach(a => {
             if (!estadisticasModulos[a.modulo]) {
                 estadisticasModulos[a.modulo] = {
                     notas: [], convocatorias: [], cantidadAlumnos: 0
@@ -55,8 +55,8 @@ const $yedra = (() => {
 
     // console.log(estadisticaPorModulo(alumnos));
 
-    function devolverDatos(alumnos) {
-        return JSON.stringify(alumnos);
+    function devolverDatos(datos = alumnos) {
+        return JSON.stringify(datos);
     }
 
     // console.log(devolverDatos(alumnos));
@@ -80,10 +80,10 @@ const $yedra = (() => {
         }
     }
 
-    return [
+    return {
         listaAlumnosSuspensos,
         estadisticaPorModulo,
         devolverDatos,
         cargarJSON,
-    ]
+    }
 })();

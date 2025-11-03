@@ -1,0 +1,12 @@
+.tabla {
+    display: flex;
+    flex-direction: column;
+}
+
+.header, .row {
+    display: flex;
+}
+
+.header > div, .row > div {
+    flex:1;
+}

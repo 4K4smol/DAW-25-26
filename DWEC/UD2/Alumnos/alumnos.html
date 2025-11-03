@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumnos</title>
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
-    <script src="app.js"></script>
-    <script src="load.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alumnos</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
+  <script src="load.js" defer></script>
 </head>
 <body>
-    <div id="botonera">
-        <fieldset>
-            <legend>Botonera Yedra</legend>
-            <label for="btn-listar">Listar Alumnos</label>
-            <input type="button" id="btn-listar" name="btn-listar"/>
+  <div id="botonera">
+    <fieldset>
+      <legend>Botonera Yedra</legend>
 
-            <label for="btn-listar-suspensos">Listar Alumnos Suspensos</label>
-            <input type="button" id="btn-listar-suspensos" name="btn-listar-suspensos"/>
+      <label for="btn-listar">Listar Alumnos</label>
+      <button type="button" id="btn-listar" name="btn-listar">Listar</button>
 
-            <label for="btn-estadisticas-modulo">Estadísticas por Módulo</label>
-            <input type="button" id="btn-estadisticas-modulo" name="btn-estadisticas-modulo">
-        </fieldset>
-    </div>
-    <br><br>
-    <h2>Resultado</h2>
-    <div id="resultados"></div>
+      <label for="btn-listar-suspensos">Listar Alumnos Suspensos</label>
+      <button type="button" id="btn-listar-suspensos" name="btn-listar-suspensos">Listar suspensos</button>
+
+      <label for="btn-estadisticas-modulo">Estadísticas por Módulo</label>
+      <button type="button" id="btn-estadisticas-modulo" name="btn-estadisticas-modulo">Estadísticas módulos</button>
+    </fieldset>
+  </div>
+
+  <h2>Resultado</h2>
+  <div id="resultado" class="resultado"></div>
 </body>
 </html>
