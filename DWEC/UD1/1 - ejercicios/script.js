@@ -952,3 +952,33 @@ function validarNombre(nombre) {
 }
 
 // gestorPersonal();
+
+
+function cruzBorgoña(tamaño, figura = 'X') {
+    const altura = tamaño;
+    const dibujo = [];
+
+    let linea = [];
+
+    for (let i = 0; i <= altura; i++) {
+        linea = '';
+        for (let j = altura; j >= 0; j--) {
+            if ((j - i == 0) || (j + i == altura)) {
+                linea += figura;
+            } else {
+                linea += '   ';
+            }
+        }
+        dibujo.push(linea);
+    }
+
+    console.log(dibujo.join('\n'));
+    /**
+     * [0, 0] [0, 9]
+     * [1, 1] [1, 8]
+     * [2, 2] [2, 7]
+     */
+    
+}
+
+cruzBorgoña(13, 'X');
