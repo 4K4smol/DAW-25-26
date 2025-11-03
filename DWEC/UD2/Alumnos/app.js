@@ -1,5 +1,5 @@
 const $yedra = (() => {
-    const alumnos = [
+    let alumnos = [
         { nombre: "Lucía", nota: 3.5, modulo: "DWEC", convocatorias: 1 },
         { nombre: "Pedro", nota: 6.7, modulo: "DWES", convocatorias: 2 },
         { nombre: "Sofía", nota: 9.2, modulo: "DWEC", convocatorias: 1 },
@@ -65,18 +65,14 @@ const $yedra = (() => {
         try {
             const datos = JSON.parse(cadenaJSON);
 
-            // comprobar si realmente es un array
+            // Si no es un array
             if (!Array.isArray(datos)) {
-                console.error("Error: el JSON no contiene un array de alumnos.");
-                return [];
+                throw new Error("El JSON no contiene un array de alumnos");
             }
-
-            console.log("JSON cargado correctamente.");
-            return datos;
-
+            // Si todo va bien, guardas los nuevos datos
+            return JSON.stringify(alumnos = datos);
         } catch (error) {
-            console.error("Error al parsear el JSON:", error.message);
-            return [];
+            alert("Error al cargar el JSON: " + error.message);
         }
     }
 

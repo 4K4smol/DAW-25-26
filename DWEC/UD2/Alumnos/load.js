@@ -1,7 +1,9 @@
 window.addEventListener("load", () => {
     const $btnListar = document.getElementById("btn-listar");
     const $btnListarSuspensos = document.getElementById("btn-listar-suspensos");
-    const $btonEstadisticasModulo = document.getElementById("btn-estadisticas-modulo");
+    const $btnEstadisticasModulo = document.getElementById("btn-estadisticas-modulo");
+    const $btnCargarJSON = document.getElementById("btn-cargar-json");
+
     const $inputResultados = document.getElementById("resultado");
 
     function printResultadoHTML(html) {
@@ -62,11 +64,11 @@ window.addEventListener("load", () => {
         printResultadoHTML(html);
     });
 
-    $btonEstadisticasModulo.addEventListener("click", () => {
+    $btnEstadisticasModulo.addEventListener("click", () => {
         const resultado = JSON.parse($yedra.estadisticaPorModulo());
         console.log(resultado);
 
-        let html= `
+        let html = `
             <div class="tabla">
                 <div class="header">
                     <div>Modilo</div>
@@ -86,8 +88,18 @@ window.addEventListener("load", () => {
                 </div>
             `;
         });
-        html+= '</div>';
+        html += '</div>';
 
+        printResultadoHTML(html);
+    });
+
+    $btnCargarJSON.addEventListener("click", () => {
+// [{"nombre": "Ana", "nota": 8.1, "modulo": "DWES", "convocatorias": 2 },{"nombre": "Luis", "nota": 4.95, "modulo": "DWEC", "convocatorias": 1}]
+
+        const cadena = String(prompt("Inserte un nuevo array JSON:"));
+        const ok = JSON.parse($yedra.cargarJSON(cadena.trim()));
+        if (ok === undefined) return;
+        html = `<p>Se ha cargado correctamente la siguiente cadena:<br>${JSON.stringify(ok)}</p>`
         printResultadoHTML(html);
     });
 
