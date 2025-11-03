@@ -66,7 +66,6 @@ window.addEventListener("load", () => {
 
     $btnEstadisticasModulo.addEventListener("click", () => {
         const resultado = JSON.parse($yedra.estadisticaPorModulo());
-        console.log(resultado);
 
         let html = `
             <div class="tabla">
@@ -97,9 +96,10 @@ window.addEventListener("load", () => {
 // [{"nombre": "Ana", "nota": 8.1, "modulo": "DWES", "convocatorias": 2 },{"nombre": "Luis", "nota": 4.95, "modulo": "DWEC", "convocatorias": 1}]
 
         const cadena = String(prompt("Inserte un nuevo array JSON:"));
-        const ok = JSON.parse($yedra.cargarJSON(cadena.trim()));
-        if (ok === undefined) return;
-        html = `<p>Se ha cargado correctamente la siguiente cadena:<br>${JSON.stringify(ok)}</p>`
+        const ok = $yedra.cargarJSON(cadena.trim());
+
+        // Devuelve
+        html = `<p>Se ha cargado correctamente la siguiente cadena:<br>${ok}</p>`
         printResultadoHTML(html);
     });
 

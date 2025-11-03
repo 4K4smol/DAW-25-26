@@ -64,15 +64,17 @@ const $yedra = (() => {
     function cargarJSON(cadenaJSON) {
         try {
             const datos = JSON.parse(cadenaJSON);
-
+            console.log(Array.isArray(datos));
+            
             // Si no es un array
-            if (!Array.isArray(datos)) {
+            if (Array.isArray(datos) === false) {
                 throw new Error("El JSON no contiene un array de alumnos");
             }
+
             // Si todo va bien, guardas los nuevos datos
             return JSON.stringify(alumnos = datos);
         } catch (error) {
-            alert("Error al cargar el JSON: " + error.message);
+            return "Error al cargar el JSON: " + error.message;
         }
     }
 
