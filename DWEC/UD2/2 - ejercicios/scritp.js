@@ -155,28 +155,30 @@ function codificarDescodificarMoser(multiCadena) {
  * 
  * Escribe una función que compruebe si los paréntesis, llaves y corchetes de una expresión
  * están equilibrados. Es decir, si cada símbolo de apertura se corresponde con un símbolo
- * de cierre en orden. 
+ * de cierre en orden.
+ * 
+ * Ejemplo:
+ *  Correcto: { [ a * ( c + d ) ] - 5 }
+ *  Incorrecto: { a * ( c + d ) ] - 5 }
  *
  */
 function expresionEquilibrada(expresion) {
-    const abiertos = ['[', '{', '('];
-    const cerrados = [']', '}', ')'];
+    const pila = [];
 
-    const cadenaFiltro = expresion.trim().split('').sort();
-    for (let i = 0; i < cadenaFiltro.length; i++) {
-        if (abiertos.includes(cadenaFiltro[i])) {
-            if (cerrados.includes(cadenaFiltro[i + 1])) {
-                i++
-                continue;
-            }
-            return false;
-        }
-        if (cerrados.includes(cadenaFiltro[i])) {
-            return false;
+    for (let ch of expresion) {
+        if (ch === '(' || ch === '[' || ch === '{') {
+            pila.push(ch);
+        } else if (ch === ')') {
+            if (pila.pop() !== '(') return false;
+        } else if (ch === ']') {
+            if (pila.pop() !== '[') return false;
+        } else if (ch === '}') {
+            if (pila.pop() !== '{') return false;
         }
     }
 
-    return true;
+    return pila.length === 0;
+
 }
 
 // console.log(expresionEquilibrada('{ a * [ ( c + d ) ] - 5 }'));
@@ -244,7 +246,7 @@ function tresRaya() {
 
 
 }
-tresRaya();
+// tresRaya();
 
 function comprobarEstado(matriz) {
 
@@ -253,7 +255,7 @@ function comprobarEstado(matriz) {
 function movimientoGanador(matriz, posicionesMaquina) {
     if (
         posicionesMaquina.length == 2
-        
+
     ) {
 
     }
@@ -309,13 +311,13 @@ function ponerMaquina(matriz, ficha) {
     const obtenerPosicionesMaquina = [];
 
     // Bloquear
-        // Comprobar lineas
+    // Comprobar lineas
     for (let i = 0; i <= 2; i++) {
         for (let j = 0; j <= 2; j++) {
             if (matriz[i][j] == ficha) {
                 obtenerPosicionesMaquina.push([i, j]);
             } else if (
-                matriz[i][j] != ficha 
+                matriz[i][j] != ficha
                 && matriz[i][j] != ''
             ) {
                 obtenerPosicionesJugador.push([i, j]);
@@ -329,11 +331,11 @@ function ponerMaquina(matriz, ficha) {
         obtenerPosicionesJugador.length = 0;
         obtenerPosicionesMaquina.length = 0;
     }
-        // comprobar columnas
+    // comprobar columnas
     for (let i = 0; i <= 2; i++) {
         for (let j = 0; j <= 2; j++) {
             if (
-                matriz[j][i] != ficha 
+                matriz[j][i] != ficha
                 || matriz[j][i] != ''
             ) {
                 obtenerPosicionesJugador.push([j, i]);
@@ -392,3 +394,116 @@ function dibujarTablero(matriz) {
 function randomEntre(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+
+/**
+ * Escribe una función que reciba dos arrays de números enteros y un parámetro operación.
+Y siguiendo la teoría de conjuntos deberá devolver en función del parámetro operación lo
+siguiente:
+• Operación “unión”, combinación de valores no repetidos de ambos arrays.
+• Operación “intersección”, valores no repetidos que se encuentran en ambos
+conjuntos.
+• Operación “diferencia”, valores del primer array no repetidos menos los valores de
+la intersección.
+No puedes emplear “Set” para la resolución del ejercicio.
+ */
+function conjuntos(array1, array2, operador) {
+    if (operador === 'union') {
+        return array1.concat(array2);
+    } else if (operador === 'interseccion') {
+        let resultado = [];
+        for (let numero2 of array2) {
+            for (let numero1 of array1) {
+                if (numero1 === numero2) {
+                    if (!resultado.includes(numero1)) {
+                        resultado.push(numero1);
+                    }
+                }
+            }
+        }
+        return resultado;
+    } else if (operador === 'diferencia') {
+        let resultado = [];
+        for (let numero1 of array1) {
+            if (array2.includes(numero1) === false) {
+                resultado.push(numero1);
+            }
+        }
+        return resultado;
+    } else {
+        return false;
+    }
+}
+
+// console.log(conjuntos([1,2,4,5], [2,10,5], 'diferencia'));
+
+
+/**
+ * Escribe una función que reciba una frase y muestre cada palabra en un línea, la salida
+está envuelta en un marco de asteriscos.
+Por ejemplo, la entrada ¿Qué te parece el reto?
+Genera la siguiente salida.
+**********
+* ¿Qué *
+* te *
+* parece *
+* el *
+* reto? *
+ */
+function marcoFrase(cadena) {
+    const arrayFrase = cadena.trim().split(' ');
+    let maximaLongitud = 0;
+    let resultado = [];
+
+    // obtener maxima longitud del marco
+    for (let string of arrayFrase) {
+        if (string.length > maximaLongitud) {
+            maximaLongitud = string.length;
+        }
+    }
+
+    resultado.push('*'.repeat(maximaLongitud + 3));
+
+    for (let i = 0; i < arrayFrase.length; i++) {
+        let linea = [];
+        linea.push('*');
+        linea.push(arrayFrase[i]);
+        linea.push(' '.repeat(maximaLongitud - arrayFrase[i].length))
+        linea.push(' *');
+
+        resultado.push(linea.join(''));
+    }
+
+    resultado.push('*'.repeat(maximaLongitud + 3));
+
+    return resultado.join('\n\n');
+
+}
+
+// console.log(marcoFrase('hola que tal cachorro'));
+
+
+/**
+ * Escribe una función que recibe un array de números enteros y devuelve el segundo valor
+más grande.
+ */
+function segundoMasGrande(arrayEnteros) {
+    const array = arrayEnteros;
+    let segundoMasGrande = 0;
+
+    for (let numero of array) {
+        if (numero == array[0]) continue;
+        if (numero > array[0]) {
+            for (let i = 0; i < array.length; i++) {
+                const element = array[i];
+                
+            }
+        }
+    }
+
+    return array;
+
+}
+
+console.log(segundoMasGrande([2, 3, 1, 7, 19]));
