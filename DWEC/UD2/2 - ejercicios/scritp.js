@@ -489,21 +489,19 @@ function marcoFrase(cadena) {
 más grande.
  */
 function segundoMasGrande(arrayEnteros) {
-    const array = arrayEnteros;
-    let segundoMasGrande = 0;
+    const array = [...arrayEnteros];
 
-    for (let numero of array) {
-        if (numero == array[0]) continue;
-        if (numero > array[0]) {
-            for (let i = 0; i < array.length; i++) {
-                const element = array[i];
-                
+    for (let i = 0; i < array.length - 1; i++) {
+        for (let j = 0; j < array.length - 1 - i; j++) {
+            if (array[j] < array[j + 1]) {
+                const temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
             }
         }
     }
 
-    return array;
-
+    return array[1];
 }
 
-console.log(segundoMasGrande([2, 3, 1, 7, 19]));
+console.log(segundoMasGrande([2, 3, 1, 7,123, 3214, 2314, 23, 19]));
