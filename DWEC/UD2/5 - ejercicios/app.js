@@ -91,33 +91,33 @@ const persona1 = new PersonaES6('eloy', '2001-12-12', 'a', 'b');
  *         para el tipo perro “nombre hace guau”.
  *  Codifícalo de la manera más correcta posible
  */
-function Animal(tipo, nombre) {
+function Animal1(tipo, nombre) {
     this.tipo = tipo;
     this.nombre = nombre;
-
-    this.comer = function () {
-        return `${this.nombre} esta comiendo`;
-    }
-
-    this.dormir = function () {
-        return `${this.nombre} esta durmiendo`;
-    }
-
-    this.hacerRuido = function () {
-        switch (this.tipo) {
-            case 'perro':
-                return `${this.nombre} esta ladrando`;
-            case 'gato':
-                return `${this.nombre} esta maullando`;
-            default:
-                return `${this.nombre} esta haciendo ruido`;
-        }
-    }
 }
 
-const perro1 = new Animal('perro', 'Sanxe');
-const gato1 = new Animal('gato', 'POllo');
-const pato1 = new Animal('pato', 'si');
+Animal1.prototype.comer = function () {
+    return `${nombre} está comiendo`;
+}
+
+Animal1.prototype.dormir = function () {
+    return `${nombre} está durmiendo`;
+}
+
+Animal1.prototype.hacerRuido = function () {
+    switch (this.tipo) {
+        case 'perro':
+            return `${this.nombre} hace guau`;
+        case 'gato':
+            return `${this.nombre} hace miau`;
+        default:
+            return `${this.nombre} hace un ruido indefinido`;
+
+    }
+}
+const perro1 = new Animal1('perro', 'Sanxe');
+const gato1 = new Animal1('gato', 'POllo');
+const pato1 = new Animal1('pato', 'si');
 
 // console.log(perro1.hacerRuido());
 // console.log(gato1.hacerRuido());
@@ -132,38 +132,91 @@ const pato1 = new Animal('pato', 'si');
 // Añade el código necesario para probar el código desarrollado, y no seas cutre borrando
 // una parte para desarrollar la siguiente (crea varios ficheros .js).
 
-class Animal {
-    constructor(tipo, nombre) {
-        this.tipo = tipo;
+class Animal2 {
+    constructor(nombre) {
         this.nombre = nombre;
     }
 
     comer() {
-        return `${this.nombre} esta comiendo`;
+        return `${this.nombre} está comiendo`;
     }
+
     dormir() {
-        return `${this.nombre} esta durmiendo`;
+        return `${this.nombre} está durmiendo`;
     }
+
     hacerRuido() {
-        return `${this.nombre} esta gritando`;
+        return `${this.nombre} hace un sonido genérico`;
     }
 }
 
-class Perro extends Animal {
+class Perro2 extends Animal2 {
     constructor(nombre) {
-        super('perro', nombre);
+        super(nombre);
+        this.tipo = 'perro';
     }
 
     hacerRuido() {
-        return `${this.nombre} esta ladrando`;
+        return `${this.nombre} hace guau`;
     }
 }
-class Gato extends Animal {
+
+class Gato2 extends Animal2 {
     constructor(nombre) {
-        super('gato', nombre);
+        super(nombre);
+        this.tipo = 'gato';
     }
 
     hacerRuido() {
-        return `${this.nombre} esta maullando`;
+        return `${this.nombre} hace miau`;
     }
 }
+
+// Pruebas
+const perro2 = new Perro2('Juan');
+const gato2 = new Gato2('Michi');
+const animal2 = new Animal2('Bicho');
+
+// console.log(perro2.comer(), perro2.hacerRuido());
+// console.log(gato2.dormir(), gato2.hacerRuido());
+// console.log(animal2.hacerRuido());
+
+function Animal3(nombre) {
+    this.nombre = nombre;
+}
+
+Animal3.prototype.comer = function() {
+    return `${this.nombre} está comiendo`;
+};
+Animal3.prototype.dormir = function() {
+    return `${this.nombre} está durmiendo`;
+};
+Animal3.prototype.hacerRuido = function() {
+    return `${this.nombre} hace un sonido genérico`;
+};
+
+function Perro3(nombre) {
+    Animal3.call(this, nombre);
+    this.tipo = 'perro';
+}
+Perro3.prototype.__proto__ = Animal3.prototype; // hereda las propiedades
+Perro3.prototype.hacerRuido = function () { // sobrescribir funcion
+    return `${this.nombre} hace guau`;
+};
+
+function Gato3(nombre) {
+    Animal3.call(this, nombre);
+    this.tipo = 'gato';
+}
+Gato3.prototype.__proto__ = Animal3.prototype; // hereda las propiedades
+Gato3.prototype.hacerRuido = function () { // sobrescribir funcion
+    return `${this.nombre} hace miau`;
+};
+
+// Pruebas
+const perro3 = new Perro3('Rex');
+const gato3 = new Gato3('Luna');
+
+// console.log(perro3.comer(), perro3.hacerRuido());
+// console.log(gato3.dormir(), gato3.hacerRuido());
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <script src="app.js"></script>
+    <script src="load.js"></script>
+    <link rel=".">
+</head>
+
+<body>
+    <div>
+        <div class="formulario">
+            <fieldset>
+                <legend>Formulario</legend>
+                <label for="cliente-nif">DNI</label>
+                <input type="text" id="cliente-nif"><br><br>
+
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha"><br><br>
+
+                <label for="hora">Hora</label>
+                <input type="time" id="hora"><br><br>
+
+                <label for=“pagada”>Pagada</label>
+                <input type="checkbox" id="pagada"><br><br>
+                <button type="button" id="btn-actualizar">Actualizar</button>
+
+                <div class="lineas">
+                    <fieldset>
+                        <legend>Líneas</legend>
+                        <button type="button" id="btn-agregar-linea">Agregar Línea</button>
+                        <button type="button" id="btn-eliminar-linea">Eliminar Línea</button><br><br>
+
+                        <label for="concepto">Concepto</label>
+                        <input type="text" id="concepto">
+
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" id="cantidad">
+
+                        <label for="precio-unitario">Precio Unitario</label>
+                        <input type="number" id="precio-unitario"><br><br>
+                    </fieldset>
+                </div>
+            </fieldset>
+        </div>
+        <br><br>
+        <div class="serializacion">
+            <fieldset>
+                <legend>Serialización</legend>
+                <label for="serializar-json">Serializar</label>
+                <input type="text" id="serializar-json">
+                <button type="button" id="btn-serializar">Procesar</button>
+                <br><br>
+                <label for="desserializar-json">Deserializar</label>
+                <input type="text" id="desserializar-json">
+                <button type="button" id="btn-deserializar">Procesar</button>
+            </fieldset>
+        </div>
+
+
+        <div class="impresion">
+
+        </div>
+    </div>
+</body>
+
+</html>
