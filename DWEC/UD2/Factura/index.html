@@ -49,19 +49,20 @@
         <br><br>
         <div class="serializacion">
             <fieldset>
-                <legend>Serialización</legend>
-                <label for="serializar-json">Serializar</label>
-                <input type="text" id="serializar-json">
-                <button type="button" id="btn-serializar">Procesar</button>
-                <br><br>
-                <label for="desserializar-json">Deserializar</label>
-                <input type="text" id="desserializar-json">
+                <legend>Serialización/Deserialización</legend>
+                <label for="desserializar-json">Entrada</label>
+                <input type="text" id="deserializar-json">
                 <button type="button" id="btn-deserializar">Procesar</button>
+                <br><br>
+                <label for="serializar-json">Salida</label>
+                <button type="button" id="btn-serializar">Procesar</button><br><br>
+                <textarea id="serializar-json" rows="10" cols="50"></textarea>
+                <br><br>
             </fieldset>
         </div>
 
 
-        <div class="impresion">
+        <div class="impresion" id="impresion">
 
         </div>
     </div>
