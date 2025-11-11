@@ -1,3 +1,5 @@
+import { Factura, Utilidades } from './app.js';
+
 window.addEventListener("load", () => {
     // Botones
     const $btnActualizar = document.getElementById("btn-actualizar");

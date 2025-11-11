@@ -1,4 +1,4 @@
-class Factura {
+export class Factura {
     constructor(clienteNif, fecha, hora, pagada, ...lineas) {
         this.clienteNif = clienteNif,
             this.fecha = fecha,
@@ -54,7 +54,7 @@ class Factura {
 /**
  * Linea (concepto, cantidad (int), precioUnitario)
  */
-class Linea {
+export class Linea {
     constructor(concepto, cantidad, precioUnitario) {
         this.concepto = String(concepto);                 // Siempre texto
         this.cantidad = Number(cantidad);                 // Fuerza número
@@ -63,7 +63,7 @@ class Linea {
 }
 
 
-class Utilidades {
+export class Utilidades {
     static serializarFactura(facturaOBJ) {
         return JSON.stringify(facturaOBJ);
     }
