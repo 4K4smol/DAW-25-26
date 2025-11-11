@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Gestoría</title>
+    <script type="module" src="gestorBiblioteca.js" defer></script>
+</head>
+
+<body>
+    <div class="menu" id="menu">
+        <label>Opciones de listado</label><br><br>
+        <button type="button" id="input-listado-autores">Listado de autores</button>
+        <button type="button" id="input-listado-libros">Listado de libros</button>
+        <button type="button" id="input-listado-bibliotecas">Listado de bibliotecas</button>
+        <br><br>
+        <form>
+            <fieldset>
+                <legend>Buscador</legend>
+                <label>Texto:</label><br>
+                <input type="text" id="input-buscar" required><br><br>
+                <fieldset>
+                    <legend>Filtrar por:</legend>
+                    <input type="radio" id="input-opcion-libro" value="libro" name="filtrado-opcion" />
+                    <label>Libro</label>
+                    <input type="radio" id="input-opcion-libro" value="autor" name="filtrado-opcion" />
+                    <label>Autor</label>
+                </fieldset><br><br>
+                <button type="button" id="btn-buscar">Buscar</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <div id="app">
+
+    </div>
+</body>
+
+</html>
