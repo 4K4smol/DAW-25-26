@@ -9,32 +9,34 @@
 </head>
 
 <body>
-    <div class="menu" id="menu">
-        <label>Opciones de listado</label><br><br>
-        <button type="button" id="input-listado-autores">Listado de autores</button>
-        <button type="button" id="input-listado-libros">Listado de libros</button>
-        <button type="button" id="input-listado-bibliotecas">Listado de bibliotecas</button>
-        <br><br>
-        <form>
+    <p>Opciones de listado</p>
+    <nav class="menu" id="menu">
+        <p><strong>Opciones de listado</strong></p>
+        <button type="button" data-action="listar-autores">Listado de autores</button>
+        <button type="button" data-action="listar-libros">Listado de libros</button>
+        <button type="button" data-action="listar-bibliotecas">Listado de bibliotecas</button>
+    </nav>
+    <form id="buscador">
+        <fieldset>
+            <legend>Buscador</legend>
+
+            <label for="q">Texto:</label><br>
+            <input type="text" id="q" name="q" required><br><br>
+
             <fieldset>
-                <legend>Buscador</legend>
-                <label>Texto:</label><br>
-                <input type="text" id="input-buscar" required><br><br>
-                <fieldset>
-                    <legend>Filtrar por:</legend>
-                    <input type="radio" id="input-opcion-libro" value="libro" name="filtrado-opcion" />
-                    <label>Libro</label>
-                    <input type="radio" id="input-opcion-libro" value="autor" name="filtrado-opcion" />
-                    <label>Autor</label>
-                </fieldset><br><br>
-                <button type="button" id="btn-buscar">Buscar</button>
-            </fieldset>
-        </form>
-    </div>
+                <legend>Filtrar por:</legend>
+                <input type="radio" id="f-libro" name="tipo" value="libro" checked>
+                <label for="f-libro">Libro</label>
 
-    <div id="app">
+                <input type="radio" id="f-autor" name="tipo" value="autor">
+                <label for="f-autor">Autor</label>
+            </fieldset><br>
 
-    </div>
+            <button type="submit">Buscar</button>
+        </fieldset>
+    </form>
+
+    <div name="app"></div>
 </body>
 
 </html>

@@ -10,6 +10,29 @@ const libros = datos.libros;
 
 console.log(bibliotecas[0], autores, libros);
 
+window.addEventListener('DOMContentLoaded', () => {
+    const $menu = document.querySelector('#menu');
+    const $buscador = document.querySelector('#buscador');
+    const $app = document.querySelector('#app');
+
+    function renderBibliotecas() {
+        $app.innerHTML = '';
+        $app.innerHTML = $biblio.generarHTMLListadoBibliotecas(bibliotecas);
+    }
+
+    // menú
+    $menu.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        const a = btn.dataset.action;
+        if (a === 'listar-autores') renderAutores();
+        if (a === 'listar-libros') renderLibros();
+        if (a === 'listar-bibliotecas') renderBibliotecas();
+    });
+
+});
+
+
 /**
  * • generarHTMLListadoAutores(): Listado con los autores. Incluye opciones de
 menú para: crear, ver, editar, borrar.
@@ -35,12 +58,27 @@ está prestado. Crea un nuevo préstamo si el libro esta disponible.
 const $biblio = (() => {
 
     function generarHTMLListadoAutores() {
-
+        return `
+            <div data-entity="">
+            </div>
+        `;
     }
 
-    function generarHTMLListadoBibliotecas() {
-
+    function generarHTMLListadoBibliotecas(bibliotecas) {
+        return `
+            <div class="listado-bibliotecas">
+                <h2>Listado de Bibliotecas</h2>
+                <ul>
+                    ${bibliotecas.map(b => `
+                        <li>
+                            <strong>${b.nombre}</strong> — ${b.ubicacion}
+                        </li>
+                    `).join("")}
+                </ul>
+            </div>
+        `;
     }
+
 
     function generarHTMLListadoLibros() {
 
@@ -56,6 +94,7 @@ const $biblio = (() => {
     function generarHTMLResultadoBuscador(params) {
 
     }
+
     function buscarLibro(libroId) {
         const libro = libros.find(l => l.libroId == libroId);
         return libro;
@@ -68,6 +107,7 @@ const $biblio = (() => {
         const biblioteca = bibliotecas.find(b => b.bibliotecaId == bibliotecaId);
         return biblioteca;
     }
+
     function crearLibro(libro) {
         const ultimoId = libros.length > 0 ? Math.max(libros.map(a => a.autorId)) : 1;
         libro.libroId = ultimoId++;
