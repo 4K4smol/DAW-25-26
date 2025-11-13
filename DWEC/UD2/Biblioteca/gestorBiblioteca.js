@@ -15,9 +15,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const $buscador = document.querySelector('#buscador');
     const $app = document.querySelector('#app');
 
-    function renderBibliotecas() {
-        $app.innerHTML = '';
-        $app.innerHTML = $biblio.generarHTMLListadoBibliotecas(bibliotecas);
+
+
+    function renderBibliotecas(text) {
+        $app.innerHTML = text;
     }
 
     // menú
@@ -25,9 +26,23 @@ window.addEventListener('DOMContentLoaded', () => {
         const btn = e.target.closest('[data-action]');
         if (!btn) return;
         const a = btn.dataset.action;
-        if (a === 'listar-autores') renderAutores();
-        if (a === 'listar-libros') renderLibros();
-        if (a === 'listar-bibliotecas') renderBibliotecas();
+        switch (a) {
+            case 'listar-autores':
+                renderBibliotecas($biblio.generarHTMLListadoAutores(autores));
+
+                const $tabla = document.querySelector('.table');
+                console.log($tabla);
+
+                break;
+            case 'listar-libros':
+                renderBibliotecas($biblio.generarHTMLListadoLibros(libros));
+                break;
+            case 'listar-bibliotecas':
+                renderBibliotecas($biblio.generarHTMLListadoBibliotecas(bibliotecas));
+                break;
+            default:
+                break;
+        }
     });
 
 });
@@ -58,30 +73,112 @@ está prestado. Crea un nuevo préstamo si el libro esta disponible.
 const $biblio = (() => {
 
     function generarHTMLListadoAutores() {
+        if (!autores || autores.length === 0) {
+            return `<p>No hay autores registrados.</p>`;
+        }
+
+        const headers = ["Nombre", "Nacionalidad", "Biografia", "Acciones"];
+
         return `
-            <div data-entity="">
+            <h2>Listado de Autores</h2>
+            <button type="button" data-action="autor-crear">Añadir Autor</button><br><br>
+
+            <div class="table" data-entity="autor">
+
+                <div class="header">
+                    ${headers.map(h => `<div class="header-child">${h}</div>`).join('')}
+                </div>
+
+                <div class="filas">
+                    ${autores.map(a => `
+                        <div class="fila" data-id="${a.autorId}">
+                            <div class="fila-child">${a.nombre}</div>
+                            <div class="fila-child">${a.nacionalidad}</div>
+                            <div class="fila-child">${a.biografia}</div>
+
+                            <div class="fila-child">
+                                <button data-action="autor-ver" data-id="${a.autorId}">Ver</button>
+                                <button data-action="autor-editar" data-id="${a.autorId}">Editar</button>
+                                <button data-action="autor-borrar" data-id="${a.autorId}">Borrar</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
             </div>
         `;
     }
 
     function generarHTMLListadoBibliotecas(bibliotecas) {
+        if (!bibliotecas || bibliotecas.length === 0) {
+            return `<p>No hay bibliotecas registradas.</p>`;
+        }
+
+        const headers = ["Nombre", "Ubicación", "Acciones"];
+
         return `
-            <div class="listado-bibliotecas">
-                <h2>Listado de Bibliotecas</h2>
-                <ul>
+            <h2>Listado de Bibliotecas</h2>
+            <button type="button" data-action="biblio-crear">Añadir biblioteca</button><br><br>
+            <div class="table" data-entity="biblioteca">
+
+                <div class="header">
+                    ${headers.map(h => `<div class="header-child">${h}</div>`).join('')}
+                </div>
+
+                <div class="filas">
                     ${bibliotecas.map(b => `
-                        <li>
-                            <strong>${b.nombre}</strong> — ${b.ubicacion}
-                        </li>
-                    `).join("")}
-                </ul>
+                        <div class="fila" data-id="${b.bibliotecaId}">
+                            <div class="fila-child">${b.nombre}</div>
+                            <div class="fila-child">${b.ubicacion}</div>
+
+                            <div class="fila-child">
+                                <button data-action="biblio-ver" data-id="${b.bibliotecaId}">Ver</button>
+                                <button data-action="biblio-editar" data-id="${b.bibliotecaId}">Editar</button>
+                                <button data-action="biblio-borrar" data-id="${b.bibliotecaId}">Borrar</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
             </div>
         `;
     }
 
 
     function generarHTMLListadoLibros() {
+        if (!libros || libros.length === 0) {
+            return `<p>No hay libros registradas.</p>`;
+        }
 
+        const headers = ["Titulo", "ISBN", "Acciones"];
+
+        return `
+            <h2>Listado de Libros</h2>
+            <button type="button" data-action="libro-crear">Añadir Libro</button><br><br>
+
+            <div class="table" data-entity="libro">
+
+                <div class="header">
+                    ${headers.map(h => `<div class="header-child">${h}</div>`).join('')}
+                </div>
+
+                <div class="filas">
+                    ${libros.map(l => `
+                        <div class="fila" data-id="${l.libroId}">
+                            <div class="fila-child">${l.titulo}</div>
+                            <div class="fila-child">${l.ISBN}</div>
+
+                            <div class="fila-child">
+                                <button data-action="libro-ver" data-id="${l.libroId}">Ver</button>
+                                <button data-action="libro-editar" data-id="${l.libroId}">Editar</button>
+                                <button data-action="libro-borrar" data-id="${l.libroId}">Borrar</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+            </div>
+        `;
     }
 
     function buscarLibrosPorTitulo(params) {
@@ -109,32 +206,50 @@ const $biblio = (() => {
     }
 
     function crearLibro(libro) {
-        const ultimoId = libros.length > 0 ? Math.max(libros.map(a => a.autorId)) : 1;
-        libro.libroId = ultimoId++;
+        const ultimoId = libros.length > 0
+            ? Math.max(...libros.map(l => l.libroId))
+            : 0;
+
+        libro.libroId = ultimoId + 1;
         libros.push(libro);
     }
+
     function crearAutor(autor) {
-        const ultimoId = autores.length > 0 ? Math.max(autores.map(a => a.autorId)) : 1;
-        autor.autorId = ultimoId++;
+        const ultimoId = autores.length > 0
+            ? Math.max(...autores.map(a => a.autorId))
+            : 0;
+
+        autor.autorId = ultimoId + 1;
         autores.push(autor);
     }
+
     function crearBiblioteca(biblioteca) {
-        const ultimoId = bibliotecas.length > 0 ? Math.max(bibliotecas.map(a => a.autorId)) : 1;
-        biblioteca.bibliotecaId = ultimoId++;
+        const ultimoId = bibliotecas.length > 0
+            ? Math.max(...bibliotecas.map(b => b.bibliotecaId))
+            : 0;
+
+        biblioteca.bibliotecaId = ultimoId + 1;
         bibliotecas.push(biblioteca);
     }
+
     function borrarLibro(libroId) {
-        const index = libros.map(l => l.libroId).indexOf(libroId);
+        const index = libros.findIndex(l => l.libroId == libroId);
+        if (index === -1) return;
         libros.splice(index, 1);
     }
+
     function borrarAutor(autorId) {
-        const index = autores.map(a => a.autorId).indexOf(autorId);
+        const index = autores.findIndex(a => a.autorId == autorId);
+        if (index === -1) return;
         autores.splice(index, 1);
     }
+
     function borrarBiblioteca(bibliotecaId) {
-        const index = bibliotecas.map(b => b.bibliotecaId).indexOf(bibliotecaId);
+        const index = bibliotecas.findIndex(b => b.bibliotecaId == bibliotecaId);
+        if (index === -1) return;
         bibliotecas.splice(index, 1);
     }
+
     function devolverPrestamo(libro) {
 
     }

@@ -30,7 +30,30 @@ export class Autor {
     }
 
     generarHTMLPropiedades() {
+        const libros = this.libros ?? null;
+        const headers = (libros != null) ? Object.keys(libros[0]) : null;
+        const filas = (libros != null) ? libros.map(l => Object.values(l)) : null;
 
+        return `
+            <p>Nombre: ${this.nombre}</p>
+            <p>Nacionalidad: ${this.nacionalidad}</p>
+            <p>Biografia:</p>
+            <textarea>${this.biografia}</textarea>
+            <br><br>
+            <div class="table">
+                <p>Libros:</p>
+                <div class="header">
+                    ${headers.map(h => `<div class="header-child">${h}</div>`).join('')}
+                </div>
+                <div class="filas">
+                    ${filas.map(fila => `
+                        <div class="fila">
+                            ${fila.map(f => `<div class="fila-child">${f}</div>`).join('')}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
     }
 
     generarHTMLEdicion() {
