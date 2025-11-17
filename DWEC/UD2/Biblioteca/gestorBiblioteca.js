@@ -10,16 +10,37 @@ const libros = datos.libros;
 
 console.log(bibliotecas[0], autores, libros);
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     const $menu = document.querySelector('#menu');
     const $buscador = document.querySelector('#buscador');
     const $app = document.querySelector('#app');
 
+    // buscador
+    $buscador.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
 
+        const texto = document.querySelector('#q').value.trim().toLowerCase();
+        const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
-    function renderBibliotecas(text) {
-        $app.innerHTML = text;
-    }
+        if (texto === '') {
+            renderBibliotecas("<p>Introduce un texto para buscar.</p>");
+            return;
+        }
+
+        if (tipo === 'libro') {
+            const resultado = libros.filter(l =>
+                l.titulo.toLowerCase().includes(texto)
+            );
+            renderBibliotecas($biblio.generarHTMLListadoLibros(resultado));
+        }
+        if (tipo === 'autor') {
+            const resultado = autores.filter(a =>
+                a.nombre.toLowerCase().includes(texto)
+            );
+            renderBibliotecas($biblio.generarHTMLListadoAutores(resultado));
+        }
+    });
 
     // menú
     $menu.addEventListener('click', (e) => {
@@ -29,10 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
         switch (a) {
             case 'listar-autores':
                 renderBibliotecas($biblio.generarHTMLListadoAutores(autores));
-
-                const $tabla = document.querySelector('.table');
-                console.log($tabla);
-
                 break;
             case 'listar-libros':
                 renderBibliotecas($biblio.generarHTMLListadoLibros(libros));
@@ -40,11 +57,42 @@ window.addEventListener('DOMContentLoaded', () => {
             case 'listar-bibliotecas':
                 renderBibliotecas($biblio.generarHTMLListadoBibliotecas(bibliotecas));
                 break;
-            default:
-                break;
         }
+
+        const $tabla = document.querySelector('#table');
+
+        $tabla.addEventListener('click', (e) => {
+            const btnAccion = e.target.closest('button[data-action]');
+            if (!btnAccion) return;
+
+            const accion = btnAccion.dataset.action;
+            const registroId = btnAccion.dataset.id;
+
+            console.log('Acción:', accion, 'ID:', registroId);
+
+            switch (accion) {
+                case 'autor-ver': {
+                    const autor = $biblio.buscarAutor(registroId);
+                    console.log('Autor a ver:', autor);
+
+                    break;
+                }
+                case 'autor-borrar': {
+                    $biblio.borrarAutor(registroId);
+                    renderBibliotecas($biblio.generarHTMLListadoAutores(autores));
+                    break;
+                }
+
+            }
+        });
+
+
     });
 
+
+    function renderBibliotecas(text) {
+        $app.innerHTML = text;
+    }
 });
 
 
@@ -72,7 +120,7 @@ está prestado. Crea un nuevo préstamo si el libro esta disponible.
  */
 const $biblio = (() => {
 
-    function generarHTMLListadoAutores() {
+    function generarHTMLListadoAutores(autores = autores) {
         if (!autores || autores.length === 0) {
             return `<p>No hay autores registrados.</p>`;
         }
@@ -83,7 +131,7 @@ const $biblio = (() => {
             <h2>Listado de Autores</h2>
             <button type="button" data-action="autor-crear">Añadir Autor</button><br><br>
 
-            <div class="table" data-entity="autor">
+            <div id="table" class="table" data-entity="autor">
 
                 <div class="header">
                     ${headers.map(h => `<div class="header-child">${h}</div>`).join('')}
@@ -109,7 +157,7 @@ const $biblio = (() => {
         `;
     }
 
-    function generarHTMLListadoBibliotecas(bibliotecas) {
+    function generarHTMLListadoBibliotecas(bibliotecas = bibliotecas) {
         if (!bibliotecas || bibliotecas.length === 0) {
             return `<p>No hay bibliotecas registradas.</p>`;
         }
@@ -119,7 +167,7 @@ const $biblio = (() => {
         return `
             <h2>Listado de Bibliotecas</h2>
             <button type="button" data-action="biblio-crear">Añadir biblioteca</button><br><br>
-            <div class="table" data-entity="biblioteca">
+            <div id="table" class="table" data-entity="biblioteca">
 
                 <div class="header">
                     ${headers.map(h => `<div class="header-child">${h}</div>`).join('')}
@@ -145,7 +193,7 @@ const $biblio = (() => {
     }
 
 
-    function generarHTMLListadoLibros() {
+    function generarHTMLListadoLibros(libros = libros) {
         if (!libros || libros.length === 0) {
             return `<p>No hay libros registradas.</p>`;
         }
@@ -156,7 +204,7 @@ const $biblio = (() => {
             <h2>Listado de Libros</h2>
             <button type="button" data-action="libro-crear">Añadir Libro</button><br><br>
 
-            <div class="table" data-entity="libro">
+            <div id="table" class="table" data-entity="libro">
 
                 <div class="header">
                     ${headers.map(h => `<div class="header-child">${h}</div>`).join('')}
