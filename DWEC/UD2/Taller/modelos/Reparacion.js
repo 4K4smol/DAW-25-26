@@ -1,0 +1,5 @@
+class Reparacion {
+    constructor(parameters) {
+        
+    }
+}

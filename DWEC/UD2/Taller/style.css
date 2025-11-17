@@ -1,0 +1,29 @@
+.tabla {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabecera */
+.header {
+    display: flex;
+    font-weight: bold;
+}
+
+.header-child {
+    flex: 1;
+}
+
+/* Filas */
+.filas {
+    display: flex;
+    flex-direction: column;
+}
+
+.fila {
+    display: flex;
+}
+
+.fila-child {
+    display: flex;
+    flex: 1;
+}

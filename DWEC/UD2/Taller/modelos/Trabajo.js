@@ -1,0 +1,5 @@
+class Trabajo {
+    constructor(parameters) {
+        
+    }
+}
