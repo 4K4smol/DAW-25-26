@@ -30,12 +30,12 @@ export class BD {
         }
     }
 
-    get ultimoVehiculoId() {
-        return this.#siguienteVehiculoId - 1;
+    #generarVehiculoId() {
+        return this.#siguienteVehiculoId++;
     }
 
-    get ultimaReparacionId() {
-        return this.#siguienteReparacionId - 1;
+    #generarReparacionId() {
+        return this.#siguienteReparacionId++;
     }
 
     obtenerVehiculos() {
@@ -43,7 +43,7 @@ export class BD {
     }
 
     crearVehiculo(vehiculo) {
-        vehiculo.vehiculoId = this.#siguienteVehiculoId++;
+        vehiculo.vehiculoId = this.#generarVehiculoId();
         this.#vehiculos.push(vehiculo);
         return vehiculo;
     }
@@ -72,7 +72,7 @@ export class BD {
     }
 
     crearReparacion(vehiculoId, reparacion) {
-        reparacion.reparacionId = this.#siguienteReparacionId++;
+        reparacion.reparacionId = this.#generarReparacionId();
         reparacion.vehiculoId = vehiculoId;
         this.#reparaciones.push(reparacion);
         return reparacion;
