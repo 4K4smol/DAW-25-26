@@ -2,8 +2,8 @@
 import { datos } from "../datos-taller.js";
 import { BD } from "../modelos/BD.js";
 
-const vehiculos = datos['vehiculos'];
-const reparaciones = datos['reparaciones'];
+const vehiculos = datos['vehiculos'] ?? null;
+const reparaciones = datos['reparaciones'] ?? null;
 console.log(vehiculos, reparaciones);
 
 class GestionMecanica {
@@ -109,10 +109,10 @@ class GestionMecanica {
                     const fila = btn.closest(".fila");
                     const id = fila?.dataset.id;
                     if (!this.#clienteBD.borrarVehiculo(id)) {
-                        $resultado.innerHTML = `Error al eliminar el vehículo ID: ${id}`;
+                        $resultado.innerHTML = `<br><div>Error al eliminar el vehículo.</div>`;
                         break;
                     }
-                    $resultado.innerHTML = `Éxito al eliminar el vehículo ID: ${id}`;
+                    $resultado.innerHTML = `<br><div>Éxito al eliminar el vehículo.</div>`;
                     break;
                 }
 
@@ -273,10 +273,6 @@ class GestionMecanica {
         }
 
         const p = vehiculo.propietario;
-
-        if (!p) {
-            return `<p>El vehículo con matrícula ${vehiculo.matricula} no tiene propietario asociado.</p>`;
-        }
 
         return `
             <div class="propietario">
