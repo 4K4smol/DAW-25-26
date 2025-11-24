@@ -32,176 +32,234 @@ class GestionMecanica {
         this.#registrarEventos();
     }
 
+    // ---- EVENTOS Y ACCIONES ----
+
+    /**
+     * Escucha todos los clicks de la página,
+     * recoge btn, accion y contenedor
+     * llama a la ejecución de la vista
+     */
     #registrarEventos() {
         this.#contenedor.addEventListener("click", (e) => {
-            const btn = e.target.closest("[data-action]");
-            if (!btn) return;
+            const datos = this.#detectarBoton(e);
 
-            const action = btn.dataset.action;
-            const $resultado = this.#contenedor.querySelector("#resultado");
+            if (!datos) return;
 
-            switch (action) {
-                case "inicio": {
-                    $resultado.innerHTML = this.#generarHTMLInicio();
+            const { btn, action, $resultado } = datos;
+
+            this.#ejecutarAccion(btn, action, $resultado);
+        });
+    }
+
+    /**
+     * Detecta el boton pulsado, el nombre y donde se va a generar
+     *  se pasa el boton ( por si requiere el id mas cercano )
+     *  se pasa la acción para entrar al méotdo
+     *  se pasa el contendor donde se pinte
+     */
+    #detectarBoton(e) {
+        const btn = e.target.closest("[data-action]"); // btn presionado
+        if (!btn) return null;
+
+        const action = btn.dataset.action; // nombre de la acción
+        const $resultado = this.#contenedor.querySelector("#resultado"); // donde va la vista generada
+
+        return { btn, action, $resultado };
+    }
+
+    /**
+     * Realiza el método solicitado y pasa la vista
+     */
+    #ejecutarAccion(btn, action, $resultado) {
+        switch (action) {
+            case "inicio": {
+                $resultado.innerHTML = this.#generarHTMLInicio();
+                break;
+            }
+
+            case "buscar": {
+                const texto = document.querySelector('#q').value.trim().toLowerCase();
+                const tipo = document.querySelector('input[name="tipo"]:checked').value;
+
+                if (texto === '') {
+                    $resultado.innerHTML = '<p>Introduce un texto para buscar los vehículos.</p>';
                     break;
                 }
 
-                case "buscar": {
-                    const texto = document.querySelector('#q').value.trim().toLowerCase();
-                    const tipo = document.querySelector('input[name="tipo"]:checked').value;
-
-                    if (texto === '') {
-                        $resultado.innerHTML = '<p>Introduce un texto para buscar los vehículos.</p>';
-                        break;
-                    }
-
-                    if (tipo === 'matricula') {
-                        $resultado.innerHTML = this.#generarHTMLVehiculos(
-                            this.#clienteBD.obtenerVehiculos().filter(v =>
-                                v.matricula.toLowerCase().includes(texto)
-                            )
-                        );
-                        break;
-                    }
-
-                    if (tipo === 'telefono') {
-                        $resultado.innerHTML = this.#generarHTMLVehiculos(
-                            this.#clienteBD.obtenerVehiculos().filter(v =>
-                                v.propietario.telefono.toLowerCase().includes(texto)
-                            )
-                        );
-                        break;
-                    }
-                    break;
-                }
-
-                case "listar-vehiculos": {
+                if (tipo === 'matricula') {
                     $resultado.innerHTML = this.#generarHTMLVehiculos(
-                        this.#clienteBD.obtenerVehiculos()
+                        this.#clienteBD.obtenerVehiculos().filter(v =>
+                            v.matricula.toLowerCase().includes(texto)
+                        )
                     );
                     break;
                 }
 
-                case "añadir-vehiculo": {
-                    // Formulario de coche con valor nulo para crear
-                    $resultado.innerHTML = this.#generarHTMLVehiculo(null);
+                if (tipo === 'telefono') {
+                    $resultado.innerHTML = this.#generarHTMLVehiculos(
+                        this.#clienteBD.obtenerVehiculos().filter(v =>
+                            v.propietario.telefono.toLowerCase().includes(texto)
+                        )
+                    );
+                    break;
+                }
+                break;
+            }
+
+            case "listar-vehiculos": {
+                $resultado.innerHTML = this.#generarHTMLVehiculos(
+                    this.#clienteBD.obtenerVehiculos()
+                );
+                break;
+            }
+
+            case "listar-no-terminadas": {
+                $resultado.innerHTML = this.#generarHTMLReparaciones(
+                    this.#clienteBD.obtenerReparaciones(
+                        'terminado', 0
+                    )
+                );
+                break;
+            }
+
+            case "listar-no-pagadas": {
+                $resultado.innerHTML = this.#generarHTMLReparaciones(
+                    this.#clienteBD.obtenerReparaciones(
+                        'pagado', 0
+                    )
+                );
+                break;
+            }
+
+            case "listar-presupuestos": {
+
+                break;
+            }
+
+            case "añadir-vehiculo": {
+                // Formulario de coche con valor nulo para crear
+                $resultado.innerHTML = this.#generarHTMLVehiculo(null);
+                break;
+            }
+
+            case "ver-vehiculo": {
+                const fila = btn.closest(".fila");
+                const id = fila?.dataset.id;
+                if (id) {
+                    $resultado.innerHTML = this.#generarHTMLVehiculo(id);
+                }
+                break;
+            }
+
+            case "ver-propietario": {
+                const fila = btn.closest(".fila");
+                const id = fila?.dataset.id;
+                if (id) {
+                    $resultado.innerHTML = this.#generarHTMLPropietario(id);
+                }
+                break;
+            }
+
+            case "borrar-vehiculo": {
+                const fila = btn.closest(".fila");
+                const id = fila?.dataset.id;
+                if (!this.#clienteBD.borrarVehiculo(id)) {
+                    $resultado.innerHTML = `<br><div>Error al eliminar el vehículo.</div>`;
+                    break;
+                }
+                $resultado.innerHTML = `<br><div>Éxito al eliminar el vehículo.</div>`;
+                break;
+            }
+
+            case "ver-reparaciones": {
+                const fila = btn.closest(".fila"); // Lista vehículos
+                const vehiculo = btn.closest(".vehiculo"); // Vista vehículo
+                const vehiculoId = fila?.dataset.id || vehiculo?.dataset.id;
+
+                if (vehiculoId) {
+                    $resultado.innerHTML = this.#generarHTMLReparacionesVehiculo(vehiculoId);
+                }
+                break;
+            }
+
+            case "ver-reparacion": {
+                const reparacionId = btn.dataset.id;
+                if (!reparacionId) break;
+
+                const reparacion = this.#clienteBD.obtenerReparacion(reparacionId);
+                if (!reparacion) {
+                    $resultado.innerHTML = `<p>No se ha encontrado la reparación con ID ${reparacionId}.</p>`;
                     break;
                 }
 
-                case "ver-vehiculo": {
-                    const fila = btn.closest(".fila");
-                    const id = fila?.dataset.id;
-                    if (id) {
-                        $resultado.innerHTML = this.#generarHTMLVehiculo(id);
-                    }
-                    break;
-                }
+                const vehiculo = this.#clienteBD
+                    .obtenerVehiculos()
+                    .find(v => v.vehiculoId == reparacion.vehiculoId) ?? null;
 
-                case "ver-propietario": {
-                    const fila = btn.closest(".fila");
-                    const id = fila?.dataset.id;
-                    if (id) {
-                        $resultado.innerHTML = this.#generarHTMLPropietario(id);
-                    }
-                    break;
-                }
+                $resultado.innerHTML = this.#generarHTMLReparacion(reparacion, vehiculo);
+                break;
+            }
 
-                case "borrar-vehiculo": {
-                    const fila = btn.closest(".fila");
-                    const id = fila?.dataset.id;
-                    if (!this.#clienteBD.borrarVehiculo(id)) {
-                        $resultado.innerHTML = `<br><div>Error al eliminar el vehículo.</div>`;
-                        break;
-                    }
-                    $resultado.innerHTML = `<br><div>Éxito al eliminar el vehículo.</div>`;
-                    break;
-                }
+            case "guardar-vehiculo": {
+                const form = this.#contenedor.querySelector('form[data-entity="vehiculo"]');
+                if (!form) break;
 
-                case "ver-reparaciones": {
-                    const fila = btn.closest(".fila");
-                    const vehiculoId = fila?.dataset.id || btn.dataset.vehiculoId;
+                const formData = new FormData(form); //inicilizar interfaz de formulario para obtener los valores
 
-                    if (vehiculoId) {
-                        $resultado.innerHTML = this.#generarHTMLReparacionesVehiculo(vehiculoId);
-                    }
-                    break;
-                }
+                // coche
+                const matricula = formData.get("matricula")?.trim();
+                const año = formData.get("año");
+                const marca = formData.get("marca")?.trim();
+                const modelo = formData.get("modelo")?.trim();
+                const motor = formData.get("motor")?.trim();
 
-                case "ver-reparacion": {
-                    const reparacionId = btn.dataset.id;
-                    if (!reparacionId) break;
+                // porpietrario
+                const propietarioEmail = formData.get("prop_email")?.trim();
+                const propietarioNombre = formData.get("prop_nombre")?.trim();
+                const propietarioTelefono = formData.get("prop_telefono")?.trim();
 
-                    const reparacion = this.#clienteBD.obtenerReparacion(reparacionId);
-                    if (!reparacion) {
-                        $resultado.innerHTML = `<p>No se ha encontrado la reparación con ID ${reparacionId}.</p>`;
-                        break;
-                    }
-
-                    const vehiculo = this.#clienteBD
-                        .obtenerVehiculos()
-                        .find(v => v.vehiculoId == reparacion.vehiculoId) ?? null;
-
-                    $resultado.innerHTML = this.generarHTMLReparacion(reparacion, vehiculo);
-                    break;
-                }
-
-                case "guardar-vehiculo": {
-                    const form = this.#contenedor.querySelector('form[data-entity="vehiculo"]');
-                    if (!form) break;
-
-                    const formData = new FormData(form);
-
-                    // coche
-                    const matricula = formData.get("matricula")?.trim();
-                    const año = formData.get("año");
-                    const marca = formData.get("marca")?.trim();
-                    const modelo = formData.get("modelo")?.trim();
-                    const motor = formData.get("motor")?.trim();
-
-                    // porpietrario
-                    const prop_email = formData.get("prop_email")?.trim();
-                    const prop_nombre = formData.get("prop_nombre")?.trim();
-                    const prop_telefono = formData.get("prop_telefono")?.trim();
-
-                    if (!matricula || !marca || !modelo || !motor || !prop_nombre) {
-                        $resultado.innerHTML = `
+                //validaciones
+                if (!matricula || !marca || !modelo || !motor || !prop_nombre) {
+                    $resultado.innerHTML = `
                         <p>Rellena todos los campos obligatorios.</p>
                         ${this.#generarHTMLVehiculo(null)}
                     `;
-                        break;
-                    }
-
-                    const nuevoVehiculo = {
-                        vehiculoId: null,
-                        matricula,
-                        año: año ? Number(año) : null,
-                        marca,
-                        modelo,
-                        motor,
-                        propietario: {
-                            email: prop_email,
-                            nombre: prop_nombre,
-                            telefono: prop_telefono
-                        }
-                    };
-
-                    this.#clienteBD.crearVehiculo(nuevoVehiculo);
-
-                    // volver index
-                    $resultado.innerHTML = `
-                        <p>Vehículo creado correctamente.</p>
-                        ${this.#generarHTMLVehiculos(this.#clienteBD.obtenerVehiculos())}
-                    `;
                     break;
                 }
 
-                default:
-                    console.log("Acción no implementada:", action);
+                const nuevoVehiculo = {
+                    vehiculoId: null,
+                    matricula,
+                    año: año ? Number(año) : null,
+                    marca,
+                    modelo,
+                    motor,
+                    propietario: {
+                        email: propietarioEmail,
+                        nombre: propietarioNombre,
+                        telefono: propietarioTelefono
+                    }
+                };
+
+                this.#clienteBD.crearVehiculo(nuevoVehiculo);
+
+                // volver index
+                $resultado.innerHTML = `
+                        <p>Vehículo creado correctamente.</p>
+                        ${this.#generarHTMLVehiculos(this.#clienteBD.obtenerVehiculos())}
+                    `;
+                break;
             }
-        });
+
+            default:
+                console.log("Acción no implementada:", action);
+        }
+
     }
+    // -------
 
 
+    // ------ VISTAS ------
     #generarHTMLBase() {
         return `
             <nav>
@@ -286,64 +344,64 @@ class GestionMecanica {
     }
 
 
-        #generarHTMLVehiculo(vehiculoId = null) {
-            const v = this.#clienteBD
-                .obtenerVehiculos()
-                .find(v => v.vehiculoId == vehiculoId);
+    #generarHTMLVehiculo(vehiculoId = null) {
+        const v = this.#clienteBD
+            .obtenerVehiculos()
+            .find(v => v.vehiculoId == vehiculoId);
 
-            if (v) return `
-                <div class="vehiculo">
-                    <h1>Vehículo</h1>
-                    <div class="propiedad"><strong>Matrícula:</strong> ${v.matricula}</div>
-                    <div class="propiedad"><strong>Marca:</strong> ${v.marca}</div>
-                    <div class="propiedad"><strong>Modelo:</strong> ${v.modelo}</div>
-                    <div class="propiedad"><strong>Motor:</strong> ${v.motor}</div>
-                    <div class="propiedad"><strong>Año:</strong> ${v.año}</div>
-                    <div class="propiedad"><strong>Nombre:</strong> ${v.propietario.nombre}</div>
-                    <br>
-                    <button type="button" data-action="ver-reparaciones" data-vehiculo-id="${v.vehiculoId}">Ver Reparaciones</button>
-                    <button type="button" data-action="listar-vehiculos">Volver al listado de vehículos</button>
-                </div>
-            `;
+        if (v) return `
+            <div class="vehiculo" data-id="${v.vehiculoId}">
+                <h1>Vehículo</h1>
+                <div class="propiedad"><strong>Matrícula:</strong> ${v.matricula}</div>
+                <div class="propiedad"><strong>Marca:</strong> ${v.marca}</div>
+                <div class="propiedad"><strong>Modelo:</strong> ${v.modelo}</div>
+                <div class="propiedad"><strong>Motor:</strong> ${v.motor}</div>
+                <div class="propiedad"><strong>Año:</strong> ${v.año}</div>
+                <div class="propiedad"><strong>Nombre:</strong> ${v.propietario.nombre}</div>
+                <br>
+                <button type="button" data-action="ver-reparaciones">Ver Reparaciones</button>
+                <button type="button" data-action="listar-vehiculos">Volver al listado de vehículos</button>
+            </div>
+        `;
 
-            return `
-                <form data-entity="vehiculo" data-mode="añadir-vehiculo">
+        return `
+            <form data-entity="vehiculo" data-mode="añadir-vehiculo">
+                <fieldset>
+                    <legend>Añadir Vehículo</legend>
+
+                    <label>Matrícula</label>
+                    <input type="text" name="matricula" required>
+
+                    <label>Año</label>
+                    <input type="number" name="año" placeholder="YYYY" min="1900" max="2050">
+
+                    <label>Marca</label>
+                    <input type="text" name="marca" required>
+
+                    <label>Modelo</label>
+                    <input type="text" name="modelo" required>
+
+                    <label>Motor</label>
+                    <input type="text" name="motor" required>
+
                     <fieldset>
-                        <legend>Añadir Vehículo</legend>
+                        <legend>Propietario</legend>
 
-                        <label>Matrícula</label>
-                        <input type="text" name="matricula" required>
+                        <label>Email</label>
+                        <input type="email" name="prop_email" required>
 
-                        <label>Año</label>
-                        <input type="number" name="año" placeholder="YYYY" min="1900" max="2050">
+                        <label>Nombre</label>
+                        <input type="text" name="prop_nombre" required>
 
-                        <label>Marca</label>
-                        <input type="text" name="marca" required>
-
-                        <label>Modelo</label>
-                        <input type="text" name="modelo" required>
-
-                        <label>Motor</label>
-                        <input type="text" name="motor" required>
-
-                        <fieldset>
-                            <legend>Propietario</legend>
-
-                            <label>Email</label>
-                            <input type="email" name="prop_email" required>
-
-                            <label>Nombre</label>
-                            <input type="text" name="prop_nombre" required>
-
-                            <label>Teléfono</label>
-                            <input type="text" name="prop_telefono" required>
-                        </fieldset>
-
-                        <button type="button" data-action="guardar-vehiculo">Guardar</button>
-                        <button type="button" data-action="listar-vehiculos">Volver al listado de vehículos</button>
+                        <label>Teléfono</label>
+                        <input type="text" name="prop_telefono" required>
                     </fieldset>
-                </form>
-            `;
+
+                    <button type="button" data-action="guardar-vehiculo">Guardar</button>
+                    <button type="button" data-action="listar-vehiculos">Volver al listado de vehículos</button>
+                </fieldset>
+            </form>
+        `;
     }
 
 
@@ -391,7 +449,7 @@ class GestionMecanica {
             <div class="propiedad"><strong>Modelo:</strong> ${vehiculo.modelo ?? ""}</div>
             <div class="propiedad"><strong>Motor:</strong> ${vehiculo.motor ?? ""}</div>
             <br>
-            ${this.generarHTMLReparaciones(reparaciones)}
+            ${this.#generarHTMLReparaciones(reparaciones)}
             <br>
             <button type="button" data-action="listar-vehiculos">
                 Volver al listado de vehículos
@@ -401,7 +459,7 @@ class GestionMecanica {
     }
 
 
-    generarHTMLReparaciones(reparaciones) {
+    #generarHTMLReparaciones(reparaciones) {
         if (!Array.isArray(reparaciones) || reparaciones.length === 0) {
             return `<p>No hay reparaciones registradas para este vehículo.</p>`;
         }
@@ -443,7 +501,7 @@ class GestionMecanica {
         `;
     }
 
-    generarHTMLReparacion(reparacion = 0, vehiculo = 0) {
+    #generarHTMLReparacion(reparacion = 0, vehiculo = 0) {
         if (!reparacion) {
             return `<p>No se ha podido cargar la reparación.</p>`;
         }
@@ -511,7 +569,7 @@ class GestionMecanica {
             </div>
         `;
     }
-
+    // -------------
 }
 
 const app = new GestionMecanica();

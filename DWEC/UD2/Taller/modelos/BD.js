@@ -1,10 +1,5 @@
 "use strict";
 
-import { Propietario } from "../modelos/Propietario.js";
-import { Reparacion } from "../modelos/Reparacion.js";
-import { Vehiculo } from "../modelos/Vehiculo.js";
-import { Trabajo } from "../modelos/Trabajo.js";
-
 export class BD {
     #vehiculos = [];
     #reparaciones = [];
@@ -66,7 +61,6 @@ export class BD {
 
         return this.#reparaciones.filter(r => r[filtro] == valor);
     }
-
 
     obtenerReparacion(reparacionId) {
         return this.#reparaciones.find(r => r.reparacionId == reparacionId) ?? null;
