@@ -172,9 +172,8 @@ class GestionMecanica {
             }
 
             case "ver-reparaciones": {
-                const fila = btn.closest(".fila"); // Lista vehículos
-                const vehiculo = btn.closest(".vehiculo"); // Vista vehículo
-                const vehiculoId = fila?.dataset.id || vehiculo?.dataset.id;
+                const vehiculo = btn.closest("[data-id]"); // Lista vehículos
+                const vehiculoId = vehiculo?.dataset.id;
 
                 if (vehiculoId) {
                     $resultado.innerHTML = this.#generarHTMLReparacionesVehiculo(vehiculoId);

@@ -1,17 +1,3 @@
-.contendor {
-    display: flex;
-}
-
-contendor > div {
-    flex: 1;
-}
-
-columnas verticales si haces un contenedor y dentro 3 div fila
-
-Mirar maquetaciones
-
-
-// MIRAR FORMA DE CREAR TABLAS DIVS (OPCION 2)
 /*Estilos de tabla*/
 .tabla {
     border: 1px solid #000;
