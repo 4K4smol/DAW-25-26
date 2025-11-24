@@ -64,8 +64,9 @@ export class BD {
             return [...this.#reparaciones];
         }
 
-        return this.#reparaciones.filter(r => r.filtro == valor);
+        return this.#reparaciones.filter(r => r[filtro] == valor);
     }
+
 
     obtenerReparacion(reparacionId) {
         return this.#reparaciones.find(r => r.reparacionId == reparacionId) ?? null;

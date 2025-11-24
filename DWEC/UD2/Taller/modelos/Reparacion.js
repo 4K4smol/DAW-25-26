@@ -1,4 +1,7 @@
-"use strict"
+"use strict";
+
+import { Trabajo } from "./Trabajo.js";
+
 export class Reparacion {
     constructor(
         reparacionId = null,
@@ -9,16 +12,16 @@ export class Reparacion {
         kilometros = null,
         pagado = null,
         terminado = null,
-        trabajos = null
+        trabajos = []
     ) {
-        this.reparacionId = reparacionId,
-        this.vehiculoId = vehiculoId,
-        this.aprobada = aprobada,
-        this.descripcion = descripcion,
-        this.fecha = fecha,
-        this.kilometros = kilometros,
-        this.pagado = pagado,
-        this.terminado = terminado,
-        this.trabajos = trabajos
+        this.reparacionId = reparacionId;
+        this.vehiculoId = vehiculoId;
+        this.aprobada = aprobada;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.kilometros = kilometros;
+        this.pagado = pagado;
+        this.terminado = terminado;
+        this.trabajos = trabajos.map(t => new Trabajo(t));
     }
 }
