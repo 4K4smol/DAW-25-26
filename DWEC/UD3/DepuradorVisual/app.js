@@ -11,7 +11,7 @@ class NodoInspector {
     }
 
     get tieneHijos() {
-        return this.#nodoActual.firstElementChild.length > 0;
+        return !!this.#nodoActual.firstElementChild;
     }
 
     get esPrimerHijo() {
@@ -28,6 +28,7 @@ class NodoInspector {
 
     // Métodos Públicos
     obtenerInfo() {
+        if (!this.#nodoActual) return null;
 
     }
 
@@ -53,8 +54,15 @@ class NodoInspector {
 
     irUltimoHijo() {
         if (!this.tieneHijos) return null;
-        const ultimoHijo = this.#nodoActual.lastElementChild;
-        if (ultimoHijo) this.#actualizarNodo(ultimoHijo);
+        let ultimoHijo = this.#nodoActual.lastElementChild;
+        while (ultimoHijo && !this.#esNodoValido(ultimoHijo)) {
+           ultimoHijo = ultimoHijo.previousElementSibling;
+        }
+
+        if (ultimoHijo) {
+            this.#actualizarNodo(ultimoHijo);
+        }
+
         return this.#nodoActual;
     }
 
@@ -74,10 +82,14 @@ class NodoInspector {
 
     // Métodos Privados
     #actualizarNodo(nuevoSeleccionado) {
-        if (!nuevoSeleccionado || nuevoSeleccionado === this.#nodoActual) return;
+        if (
+            !nuevoSeleccionado
+            || nuevoSeleccionado === this.#nodoActual
+            || !this.#esNodoValido(nuevoSeleccionado)
+        ) return null;
 
         // Quitar resaltado anterior
-        if (this.#nodoActual && this.#nodoActual.classList) {
+        if (this.#nodoActual) {
             this.#nodoActual.classList.remove("resaltado");
         }
 
@@ -88,10 +100,23 @@ class NodoInspector {
             this.#nodoActual.classList.add("resaltado");
         }
     }
+
+    #esNodoValido(nodo) {
+        if (!(nodo instanceof HTMLElement)) return false;
+
+        if (nodo.closest(".panel-depurador")) return false;
+
+        if (nodo.tagName === "SCRIPT") return false;
+
+        if (nodo.id?.startsWith("give-freely-root")) return false;
+
+        return true;
+    }
 }
 
 
 const $depurador = (() => {
+    const nodo = new NodoInspector(document.body);
     const panelFlotanteDepurador = document.createElement('div');
     panelFlotanteDepurador.classList.add('panel-depurador'); // clase CSS
 
@@ -110,33 +135,31 @@ const $depurador = (() => {
     panelFlotanteDepurador.addEventListener("click", (e) => {
         const btn = e.target.closest("[data-action]");
         if (!btn) return;
-        const nodo = new NodoInspector(document.body);
 
         const action = btn.dataset.action;
-        console.log(action);
         switch (action) {
             case "navegar-raiz":
-                console.log(nodo.irRaiz());
+                nodo.irRaiz();
                 break;
 
             case "navegar-padre":
-                console.log(nodo.irPadre());
+                nodo.irPadre();
                 break;
 
             case "navegar-primer-hijo":
-                console.log(nodo.irPrimerHijo());
+                nodo.irPrimerHijo();
                 break;
 
             case "navegar-ultimo-hijo":
-                console.log(nodo.irUltimoHijo());
+                nodo.irUltimoHijo();
                 break;
 
             case "navegar-hermano-siguiente":
-                console.log(nodo.irSiguienteHermano());
+                nodo.irSiguienteHermano();
                 break;
 
             case "navegar-hermano-anterior":
-                console.log(nodo.irAnteriorHermano());
+                nodo.irAnteriorHermano();
                 break;
 
             case "activar-desactivar-panel":

@@ -1,12 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Depurador Visual</title>
     <script src="app.js" defer></script>
+    <style>
+        .resaltado {
+            outline: 3px solid red;
+            outline-offset: 4px;
+        }
+    </style>
 </head>
-<body>
 
+<body>
+    <header>
+        <h1>UD3E2 – Depurador visual (DOM)</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Ejemplo de contenido</h2>
+            <p>
+                Esta página sirve como escenario de pruebas para el
+                <strong>depurador visual</strong> del DOM.
+                Podrás ir navegando entre nodos padre, hijos y hermanos.
+            </p>
+            <p>
+                Selecciona distintos elementos (por ejemplo desde el código)
+                y comprueba cómo el depurador resalta el nodo actual
+                y muestra su información.
+            </p>
+        </section>
+
+        <section>
+            <h2>Lista de tareas</h2>
+            <ul>
+                <li data-tipo="tarea" data-prioridad="alta">Implementar la clase <code>NodoInspector</code>.</li>
+                <li data-tipo="tarea" data-prioridad="media">Crear el panel flotante de depuración dinámicamente.</li>
+                <li data-tipo="tarea" data-prioridad="baja">Aplicar el estilo de resaltado al nodo seleccionado.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Tarjetas de ejemplo</h2>
+            <div class="tarjetas">
+                <article class="tarjeta" data-rol="card">
+                    <h3>Artículo 1</h3>
+                    <p>
+                        Texto de ejemplo dentro de una tarjeta. Úsalo para probar el
+                        desplazamiento entre hermanos y la lectura de clases.
+                    </p>
+                </article>
+
+                <article class="tarjeta" data-rol="card destacada">
+                    <h3>Artículo 2</h3>
+                    <p>
+                        Otro nodo con varias clases y atributos <code>data-*</code> para
+                        que tu depurador los muestre correctamente.
+                    </p>
+                </article>
+
+                <article class="tarjeta" data-rol="card">
+                    <h3>Artículo 3</h3>
+                    <p>
+                        Ideal para probar la navegación al <em>hermano siguiente</em> y
+                        <em>hermano anterior</em>.
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Práctica UD3E2 – Depurador visual del DOM</p>
+    </footer>
 </body>
 </html>
