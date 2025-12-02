@@ -33,6 +33,10 @@ window.document.addEventListener("DOMContentLoaded", () => {
         const contendorDetallesAlumnos = document.createElement('div');
         contendorDetallesAlumnos.classList.add('contenedor-tabla-alumnos');
 
+        // Truncar
+        const MAX_CURSO = 15;
+        const MAX_EMAIL = 15;
+
         // contenido
         const headers = ['Nombre', 'curso', 'telefono', 'email'];
         const texto = `
@@ -44,9 +48,25 @@ window.document.addEventListener("DOMContentLoaded", () => {
                 <div class="filas">
                     ${alumnos.map(a => `
                         <div class="fila">
-                            ${headers.map(p => `
-                                <div class="fila-child">${a[p.toLowerCase()]}</div>
-                            `).join("")}
+                            ${headers.map(p => {
+                                let valor = a[p.toLowerCase()];
+
+                                // Truncar curso
+                                if (valor.length > MAX_CURSO) {
+                                    return `<div class="fila-child" data-full="${valor}">
+                                        ${valor.slice(0, MAX_CURSO)}...
+                                    </div>`;
+                                }
+
+                                // Truncar email
+                                if (valor.length > MAX_EMAIL) {
+                                    return `<div class="fila-child" data-full="${valor}">
+                                        ${valor.slice(0, MAX_EMAIL)}...
+                                    </div>`;
+                                }
+
+                                return `<div class="fila-child">${valor}</div>`;
+                            }).join("")}
                         </div>
                     `).join("")}
                 </div>
@@ -88,27 +108,111 @@ window.document.addEventListener("DOMContentLoaded", () => {
     cabecera.addEventListener("click", (e) => {
         const btn = e.target.closest("[data-action]");
         if (!btn) return;
+        let resultado = null; // bloque
 
         const action = btn.dataset.action;
         switch (action) {
             case "vista-detalles":
                 limpiarContenido();
                 contenedor.appendChild(vistaDetalles(alumnos));
+
+                resultado = contenedor.children[1];
+
+                resultado.addEventListener("click", (e) => {
+                    const fila = e.target.closest(".fila");
+                    if (!fila) return;
+
+                    const estabaAbierta = fila.classList.contains("click");
+
+                    // Cerrar todas las filas abiertas
+                    resultado.querySelectorAll(".fila.click").forEach(f => {
+                        f.classList.remove("click");
+                        f.classList.remove("hover");
+                        f.querySelectorAll(".fila-child").forEach(celda => {
+                            const full = celda.dataset.full ?? '';
+                            if (full) {
+                                celda.textContent = full.slice(0, 15) + '...';
+                            }
+                        });
+                    });
+
+                    // Si la fila no estaba abierta, la abrimos
+                    if (!estabaAbierta) {
+                        fila.classList.add("click");
+                        fila.querySelectorAll(".fila-child").forEach(celda => {
+                            const full = celda.dataset.full ?? '';
+                            if (full) {
+                                celda.textContent = full;
+                            }
+                        });
+                    }
+                });
+
+                resultado.addEventListener("mouseover", (e) => {
+                    if (resultado.querySelector(".fila.click")) return;
+
+                    const fila = e.target.closest(".fila");
+                    if (!fila) return;
+
+                    fila.classList.add('hover');
+                    fila.querySelectorAll(".fila-child").forEach(celda => {
+                        const full = celda.dataset.full ?? '';
+                        if (full) {
+                            celda.textContent = full;
+                        }
+                    });
+                });
+                resultado.addEventListener("mouseout", (e) => {
+                    if (resultado.querySelector(".fila.click")) return;
+
+                    const fila = e.target.closest(".fila");
+                    if (!fila) return;
+
+                    fila.classList.remove('hover');
+                    fila.querySelectorAll(".fila-child").forEach(celda => {
+                        const full = celda.dataset.full ?? '';
+                        if (full) {
+                            celda.textContent = full.slice(0, 15) + '...';
+                        }
+                    });
+                });
                 break;
 
             case "vista-fichas":
                 limpiarContenido();
                 contenedor.appendChild(vistaFichas(alumnos));
 
-                const resultado = contenedor.children[1];
+                resultado = contenedor.children[1];
+
+                resultado.addEventListener("click", (e) => {
+                    const tarjeta = e.target.closest(".tarjeta");
+                    if (!tarjeta) return;
+
+                    const estabaAbierta = tarjeta.classList.contains("click");
+
+                    // Remove toditos
+                    resultado.querySelectorAll(".tarjeta.click").forEach(t => {
+                        t.classList.remove("click");
+                        t.classList.remove("hover");
+                    });
+
+                    if (!estabaAbierta) {
+                        tarjeta.classList.add("click");
+                        tarjeta.classList.add("hover");
+                    }
+                });
+
                 resultado.addEventListener("mouseover", (e) => {
+                    if (resultado.querySelector(".tarjeta.click")) return;
+
                     const tarjeta = e.target.closest(".tarjeta");
                     if (!tarjeta) return;
 
                     tarjeta.classList.add("hover");
                 });
-
                 resultado.addEventListener("mouseout", (e) => {
+                    if (resultado.querySelector(".tarjeta.click")) return;
+
                     const tarjeta = e.target.closest(".tarjeta");
                     if (!tarjeta) return;
 
