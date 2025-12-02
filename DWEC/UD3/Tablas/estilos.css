@@ -1,0 +1,43 @@
+.tabla {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabecera */
+.header {
+    display: flex;
+    font-weight: bold;
+}
+
+.header-child {
+    flex: 1;
+}
+
+/* Filas */
+.filas {
+    display: flex;
+    flex-direction: column;
+}
+
+.fila {
+    display: flex;
+}
+
+.fila-child {
+    display: flex;
+    flex: 1;
+}
+
+.contenedor-fichas-alumnos {
+    display: flex;
+}
+
+.contenedor-fichas-alumnos .tarjeta {
+    flex: 1;
+    text-align: center;   /* centra texto */
+}
+
+.tarjeta.hover {
+    background-color: #bcd5fbff;
+    transform: scale(1.05);
+}
