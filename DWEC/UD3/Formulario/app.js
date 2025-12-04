@@ -148,7 +148,7 @@ $form.addEventListener("submit", (e) => {
     const datos = {
         nombre: $nombre.value.trim(),
         email: $email.value.trim(),
-        password: $password.value,              // solo para la práctica
+        password: $password.value,
         fechaNacimiento: $fechaNacimiento.value,
         telefono: $telefono.value.trim(),
         genero: $genero.value,
