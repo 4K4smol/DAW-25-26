@@ -1,0 +1,65 @@
+.contenedor {
+    display: flex;
+    justify-content: center;
+}
+
+.tablas-wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Cada tabla ocupa la misma anchura */
+.tabla {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    flex: 1;
+    background-color: #fafafa;
+}
+
+/* Cabecera */
+.header {
+    display: flex;
+    font-weight: bold;
+    background-color: #eee;
+    padding: 0.4rem 0.6rem;
+}
+
+.header-child {
+    flex: 1;
+}
+
+/* Filas */
+.filas {
+    display: flex;
+    flex-direction: column;
+}
+
+.fila {
+    display: flex;
+    padding: 0.4rem 0.6rem;
+    border-top: 1px solid #ddd;
+}
+
+.fila-child {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.botones-traspaso {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.botones-traspaso .boton-traspaso {
+    cursor: pointer;
+    margin: 5px;
+}
+
+.fila.seleccionada {
+    background-color: #838385ff;
+}
