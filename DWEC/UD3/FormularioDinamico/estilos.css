@@ -63,3 +63,18 @@
 .fila.seleccionada {
     background-color: #838385ff;
 }
+
+.click {
+    background-color: aquamarine;
+}
+
+.boton-enviar {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.resultado {
+    margin-top: 50px;
+}
