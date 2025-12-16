@@ -3,7 +3,6 @@ class ValidacionError extends Error {
     constructor(mensaje, campo) {
         super(mensaje);
         this.campo = campo;
-        this.name = "ValidacionError";
     }
 }
 
@@ -134,17 +133,17 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     limpiarErrores();
 
-    validarNombre(nombre.value, (nombreValor, err) => {
-        if (err) return mostrarError(err);
+    validarNombre(nombre.value, (nombreValor, error) => {
+        if (error) return mostrarError(error);
 
-        validarPassword(password.value, (passwordValor, err) => {
-            if (err) return mostrarError(err);
+        validarPassword(password.value, (passwordValor, error) => {
+            if (error) return mostrarError(error);
 
-            validarEmail(email.value, (emailValor, err) => {
-                if (err) return mostrarError(err);
+            validarEmail(email.value, (emailValor, error) => {
+                if (error) return mostrarError(error);
 
-                validarFecha(fecha.value, (fechaValor, err) => {
-                    if (err) return mostrarError(err);
+                validarFecha(fecha.value, (fechaValor, error) => {
+                    if (error) return mostrarError(error);
 
                     alert("Formulario validado correctamente ✅");
 
