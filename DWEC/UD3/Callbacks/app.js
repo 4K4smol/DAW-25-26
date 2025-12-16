@@ -134,25 +134,25 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     limpiarErrores();
 
-    validarNombre(nombre.value, (nombreVal, err) => {
+    validarNombre(nombre.value, (nombreValor, err) => {
         if (err) return mostrarError(err);
 
-        validarPassword(password.value, (passVal, err) => {
+        validarPassword(password.value, (passwordValor, err) => {
             if (err) return mostrarError(err);
 
-            validarEmail(email.value, (emailVal, err) => {
+            validarEmail(email.value, (emailValor, err) => {
                 if (err) return mostrarError(err);
 
-                validarFecha(fecha.value, (fechaVal, err) => {
+                validarFecha(fecha.value, (fechaValor, err) => {
                     if (err) return mostrarError(err);
 
                     alert("Formulario validado correctamente ✅");
 
                     const datos = {
-                        nombre: nombreVal,
-                        password: passVal,
+                        nombre: nombreValor,
+                        password: passwordValor,
                         email: emailVal,
-                        fecha: fechaVal
+                        fecha: fechaValor
                     };
 
                     localStorage.setItem("formulario", JSON.stringify(datos));
