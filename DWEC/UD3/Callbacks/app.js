@@ -151,7 +151,7 @@ form.addEventListener("submit", (e) => {
                     const datos = {
                         nombre: nombreValor,
                         password: passwordValor,
-                        email: emailVal,
+                        email: emailValor,
                         fecha: fechaValor
                     };
 
