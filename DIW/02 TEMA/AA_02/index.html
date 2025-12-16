@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario completo</title>
+</head>
+<body>
+
+<h1>Formulario de ejemplo</h1>
+
+<form action="#" method="post">
+
+    <!-- TEXT -->
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" name="nombre"><br><br>
+
+    <!-- PASSWORD -->
+    <label for="password">Contraseña:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+
+    <!-- EMAIL -->
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <!-- NUMBER -->
+    <label for="edad">Edad:</label><br>
+    <input type="number" id="edad" name="edad"><br><br>
+
+    <!-- DATE -->
+    <label for="fecha">Fecha de nacimiento:</label><br>
+    <input type="date" id="fecha" name="fecha"><br><br>
+
+    <!-- RADIO -->
+    <p>Sexo:</p>
+    <input type="radio" id="masculino" name="sexo" value="masculino">
+    <label for="masculino">Masculino</label><br>
+
+    <input type="radio" id="femenino" name="sexo" value="femenino">
+    <label for="femenino">Femenino</label><br><br>
+
+    <!-- CHECKBOX -->
+    <p>Aficiones:</p>
+    <input type="checkbox" id="deporte" name="aficiones" value="deporte">
+    <label for="deporte">Deporte</label><br>
+
+    <input type="checkbox" id="musica" name="aficiones" value="musica">
+    <label for="musica">Música</label><br><br>
+
+    <!-- SELECT -->
+    <label for="ciclo">Ciclo formativo:</label><br>
+    <select id="ciclo" name="ciclo">
+        <option value="daw">DAW</option>
+        <option value="dam">DAM</option>
+        <option value="asir">ASIR</option>
+    </select><br><br>
+
+    <!-- FILE -->
+    <label for="archivo">Adjuntar archivo:</label><br>
+    <input type="file" id="archivo" name="archivo"><br><br>
+
+    <!-- COLOR -->
+    <label for="color">Color favorito:</label><br>
+    <input type="color" id="color" name="color"><br><br>
+
+    <!-- RANGE -->
+    <label for="nivel">Nivel de satisfacción:</label><br>
+    <input type="range" id="nivel" name="nivel" min="0" max="10"><br><br>
+
+    <!-- SUBMIT -->
+    <input type="submit" value="Enviar formulario">
+    <input type="reset" value="Limpiar">
+
+</form>
+
+
+<h2>Ejercicio 2</h2>
+
+<form>
+
+  <!-- LABEL + SELECT -->
+  <label for="instituto">Selecciona instituto:</label><br>
+  <select id="instituto" name="instituto">
+    <option value="mh">IES Miguel Herrero</option>
+    <option value="bq">IES Bernaldo de Quirós</option>
+    <option value="ag">IES Augusto González</option>
+  </select>
+
+  <br><br>
+
+  <!-- LABEL + FILE -->
+  <label for="dni">Adjunta el fichero con el DNI:</label><br>
+  <input type="file" id="dni" name="dni">
+
+</form>
+
+
+<h2>Ejercicio 3: checked y selected</h2>
+
+<form action="#" method="post">
+
+  <!-- CHECKBOX con checked -->
+  <p>Ciclos a matricular (uno marcado por defecto con checked):</p>
+
+  <input type="checkbox" id="daw" name="ciclos" value="DAW" checked>
+  <label for="daw">DAW</label><br>
+
+  <input type="checkbox" id="asir" name="ciclos" value="ASIR">
+  <label for="asir">ASIR</label><br><br>
+
+  <!-- SELECT con selected -->
+  <label for="instituto">Instituto (uno seleccionado por defecto con selected):</label><br>
+  <select id="instituto" name="instituto">
+    <option value="mh">IES Miguel Herrero</option>
+    <option value="bq" selected>IES Bernaldo de Quirós</option>
+    <option value="ag">IES Augusto González</option>
+  </select><br><br>
+
+  <input type="submit" value="Enviar">
+</form>
+
+
+</body>
+</html>
