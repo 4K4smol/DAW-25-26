@@ -12,62 +12,58 @@ const ENTITIES = [
     { key: "comments", label: "Comments", page: "comments.html" },
 ];
 
-function cargarInicio() {
-    pintarCards();
-    cargarDatosCards();
-    activarClicks();
+window.addEventListener("DOMContentLoaded", init);
+
+function init() {
+    renderCards();
+    setupClicks();
+    loadCounts();
 }
 
-function pintarCards() {
-    const $cards = $("#cards");
-    const html = ENTITIES.map(({ key, label }) => `
-    <div class="card" data-key="${key}">
-        <h3 class="title">${label}</h3>
-        <p class="meta">
-            Total: <span class="count">…</span>
-        </p>
-        <p class="error" hidden>Error</p>
-    </div>
-  `).join("");
+function renderCards() {
+    const container = $("#cards").n;
 
-    $cards.nodes[0].innerHTML = html;
+    container.innerHTML = ENTITIES.map(({ key, label }) => `
+        <div class="card" data-key="${key}">
+            <h3 class="title">${label}</h3>
+            <p class="meta">Total: <span class="count">…</span></p>
+            <p class="error" hidden>Error</p>
+        </div>
+    `).join("");
 }
 
-function activarClicks() {
-    const cardsContainer = $("#cards").n;
+function setupClicks() {
+    const container = $("#cards").n;
 
-    cardsContainer.addEventListener("click", (e) => {
+    container.addEventListener("click", (e) => {
         const card = e.target.closest(".card");
         if (!card) return;
 
-        const key = card.dataset.key;
-        const entidad = ENTITIES.find(x => x.key === key);
-        if (!entidad) return;
+        const key = $(card).data("key");
+        const entity = ENTITIES.find(x => x.key === key);
+        if (!entity) return;
 
-        window.location.href = entidad.page;
+        window.location.href = entity.page; // Redirigir a la paágina de cada Cards
     });
 }
 
-function cargarDatosCards() {
-    return Promise.all(
-        ENTITIES.map(entidad => cargarDatosCard(entidad))
-    );
+function loadCounts() {
+    ENTITIES.forEach(loadCount);
 }
 
-async function cargarDatosCard({ key, label }) {
-    const card = $(`.card[data-key="${key}"]`).nodes;
-    const count = card.querySelector(".count");
-    const error = card.querySelector(".error");
+async function loadCount({ key, label }) {
+    const card = $(`.card[data-key="${key}"]`).n;
+    if (!card) return;
+
+    const countEl = card.querySelector(".count");
+    const errorEl = card.querySelector(".error");
 
     try {
-        const datos = await get(BASE_URL + key);
-        count.textContent = datos.length;
+        const data = await get(BASE_URL + key);
+        countEl.textContent = data.length;
     } catch (err) {
-        count.textContent = "—";
-        error.hidden = false;
+        countEl.textContent = "—";
+        errorEl.hidden = false;
         console.error(`Error cargando ${label}`, err);
     }
 }
-
-
-window.addEventListener("DOMContentLoaded", cargarInicio);

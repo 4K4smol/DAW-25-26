@@ -1,0 +1,35 @@
+/* Contenedor de cards */
+.cards {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Card */
+.card {
+  flex: 1;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  background-color: green;
+  padding: 5px;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* Título */
+.card .title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.card .count {
+  font-weight: bold;
+  color: #3498db;
+}
+
+/* Error */
+.card .error {
+  color: #e74c3c;
+}
