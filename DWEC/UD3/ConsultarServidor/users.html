@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>UD3E9 - Users</title>
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/table.css" />
+    <link rel="stylesheet" href="./assets/css/pager.css" />
+</head>
+
+<body>
+    <header class="container">
+        <h1>Users</h1>
+        <nav>
+            <a href="./index.html">Inicio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="toolbar">
+            <input id="search" type="search" placeholder="Buscar por nombre o email..." />
+
+            <label>
+                Items:
+                <select id="limit">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="0">Todos</option>
+                </select>
+            </label>
+        </section>
+
+        <section id="status" class="status"></section>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Ciudad</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+
+        <section class="pager">
+            <button id="prev">Anterior</button>
+            <span id="pageInfo"></span>
+            <button id="next">Siguiente</button>
+        </section>
+    </main>
+
+    <script type="module" src="./src/pages/users.page.js"></script>
+</body>
+
+</html>

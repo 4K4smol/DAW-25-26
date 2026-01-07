@@ -19,6 +19,7 @@ const $ = function (selector = null) {
             }
         }
 
+        // Devuelve todos los nodos con el selector indicado
         each(callback) {
             this.nodes.forEach(node => callback(node));
             return this;

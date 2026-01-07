@@ -1,14 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultas Servidor</title>
-    <script type="module" src="./js/pages/index.js" defer></script>
-    <link rel="stylesheet" href="estilos.css">
-    <link rel="icon" href=".">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>UD3E9 - Inicio</title>
 </head>
+
 <body>
-    <div id="cards" class="cards"></div>
+    <header class="container">
+        <h1>UD3E9 - Consultas servidor</h1>
+        <nav>
+            <a href="./users.html">Users</a>
+            <a href="./posts.html">Posts</a>
+            <a href="./todos.html">Todos</a>
+            <a href="./comments.html">Comments</a>
+            <a href="./albums.html">Albums</a>
+            <a href="./photos.html">Photos</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="status" class="status"></section>
+
+        <section class="cards" id="cards">
+        </section>
+    </main>
+
+    <script type="module" src="./src/pages/index.page.js"></script>
 </body>
+
 </html>
