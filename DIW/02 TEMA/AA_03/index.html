@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas</title>
+
+    <style>
+        .ej-1, th, td {
+            border: 1px solid black;
+        }
+
+        .ej-2 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tarea 1</h1>
+
+    <table class="ej-1">
+        <thead>
+            <tr>
+                <th>Lenguaje</th>
+                <th>DWEC</th>
+                <th>DIW</th>
+                <th>SISIN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>HTML</td>
+                <td colspan="2">SI</td>
+                <td>NO</td>
+            </tr>
+            <tr>
+                <td>CSS</td>
+                <td rowspan="2">SI</td>
+                <td>SI</td>
+                <td>NO</td>
+            </tr>
+            <tr>
+                <td>JS</td>
+                <td>SI</td>
+                <td>NO</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h1>Tarea 2</h1>
+
+    <table class="ej-2">
+        <thead>
+            <tr>
+                <th>Lenguaje</th>
+                <td>HTML</td>
+                <td>CSS</td>
+                <td>JS</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>DWEC</th>
+                <td rowspan="2">SI</td>
+                <td colspan="2">SI</td>
+            </tr>
+            <tr>
+                <th>DIW</th>
+                <td>SI</td>
+                <td>SI</td>
+            </tr>
+            <tr>
+                <th>SISIN</th>
+                <td>NO</td>
+                <td>NO</td>
+                <td>NO</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
