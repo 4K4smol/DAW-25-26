@@ -1,0 +1,33 @@
+.tabla {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabla-header {
+    display: flex;
+}
+
+.tabla-header-cell {
+    flex: 1;
+}
+
+.tabla-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabla-body-cell {
+    display: flex;
+}
+
+.tabla-body-cell-prop {
+    flex: 1;
+}
+
+.selected-click {
+    border: 1px solid red;
+}
+
+.selected {
+    border: 1px solid red;
+}

@@ -1,0 +1,26 @@
+.tabla {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabla-header {
+    display: flex;
+}
+
+.tabla-header-child {
+    flex: 1;
+}
+
+.tabla-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabla-body-child {
+    display: flex;
+}
+
+.tabla-body-child-prop {
+    flex: 1;
+}
+

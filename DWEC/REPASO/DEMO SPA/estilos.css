@@ -1,0 +1,36 @@
+.tabla {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tabla-header > .header-child,
+.body-child > .body-prop {
+    border: 1px solid black;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.tabla-header {
+    display: flex;
+}
+
+.header-child {
+    flex: 1;
+}
+
+
+.tabla-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.body-child {
+    display: flex;
+}
+
+
+.body-prop {
+    flex: 1;
+}
