@@ -1,0 +1,26 @@
+.tabla {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-tabla {
+    display: flex;
+}
+
+.campo-header-tabla {
+    flex: 1;
+}
+
+.body-tabla {
+    display: flex;
+    flex-direction: column;
+}
+
+.row-body-tabla{
+    display: flex;
+}
+
+.campo-row-body-tabla {
+    flex: 1
+}
+

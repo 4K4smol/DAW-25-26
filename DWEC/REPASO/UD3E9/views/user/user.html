@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="../../index.css">
+    <link rel="stylesheet" href="user.css">
+    <script src="../../js/user.js" defer></script>
+</head>
+<body>
+    <a href="../../index.html" class="btn-volver">← Volver al Inicio</a>
+    <h1>Gestión de Usuarios</h1>
+    
+    <div class="controles">
+        <input type="text" id="filtro" placeholder="Filtrar por nombre...">
+        <select id="itemsPorPagina">
+            <option value="5">5 por página</option>
+            <option value="10" selected>10 por página</option>
+            <option value="20">20 por página</option>
+            <option value="todos">Todos</option>
+        </select>
+    </div>
+
+    <div id="listaUsuarios"></div>
+    <div id="paginador"></div>
+</body>
+</html>

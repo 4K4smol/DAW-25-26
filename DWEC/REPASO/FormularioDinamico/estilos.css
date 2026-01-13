@@ -1,0 +1,51 @@
+.contenedor {
+    align-items: center;
+    width: 50%;
+}
+
+.resultado {
+    display: flex;
+    align-items: top;
+}
+
+.alumnos-lista {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 50px;
+}
+
+.header-tabla-alumnos-lista {
+    display: flex;
+}
+
+.campo-header-tabla-alumnos-lista {
+    flex: 1;
+}
+
+.body-tabla-alumnos-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.row-body-tabla-alumnos-lista {
+    display: flex;
+
+}
+
+.cell-body-tabla-alumnos-lista {
+    flex: 1;
+}
+
+.botones-seleccion {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boton-seleccionar,
+.boton-deseleccionar {
+    width: 50px;
+}

@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contenedorTarjeta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 900px; /* Ajusta según el tamaño de 3 tarjetas */
+    margin: auto;
+}
+
+.tarjeta {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex: 0 0 calc(33.333% - 20px); /* 3 tarjetas por fila con gap */
+    box-sizing: border-box;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.tarjeta h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.contador {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #007bff;
+}

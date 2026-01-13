@@ -1,0 +1,279 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.btn-volver {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+}
+
+.btn-volver:hover {
+    background: #5a6268;
+}
+
+.controles {
+    display: flex;
+    gap: 15px;
+    margin: 20px auto;
+    flex-wrap: wrap;
+    max-width: 1200px;
+}
+
+.controles input,
+.controles select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.controles input {
+    flex: 1;
+    min-width: 250px;
+}
+
+.controles select {
+    min-width: 150px;
+}
+
+#listaPhotos {
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.item-entidad {
+    background: white;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.item-entidad:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos específicos para fotos */
+.item-photo {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.item-photo .thumbnail {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.item-photo .item-info {
+    flex: 1;
+}
+
+.item-info h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.item-info p {
+    margin: 5px 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.item-acciones {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.item-acciones button {
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+.item-acciones button:hover {
+    background: #0056b3;
+}
+
+#paginador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+#paginador button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#paginador button:hover:not(:disabled) {
+    background: #0056b3;
+}
+
+#paginador button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+#paginador span {
+    font-weight: bold;
+    color: #333;
+}
+
+.mensaje-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 1200px;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .controles {
+        flex-direction: column;
+    }
+
+    .controles input,
+    .controles select {
+        width: 100%;
+    }
+
+    .item-acciones {
+        flex-direction: column;
+    }
+
+    .item-acciones button {
+        width: 100%;
+    }
+
+    .item-photo {
+        flex-direction: column;
+    }
+
+    .item-photo .thumbnail {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/*CSS de photoDetalle*/
+.formulario {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.thumbnail-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.thumbnail-container img {
+    max-width: 150px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.botones button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-guardar {
+    max-height: 42px;
+    background: #28a745;
+    color: white;
+}
+
+.btn-guardar:hover {
+    background: #218838;
+}
+
+.btn-volver {
+    max-height: 42px;
+    background: #6c757d;
+    color: white;
+}
+
+.btn-volver:hover {
+    background: #5a6268;
+}
+
+.btn-ampliar {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-ampliar:hover {
+    background: #138496;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas To-Do</title>
+    <script type="module" src="./src/main.js" defer></script>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="filtro">
+            <input type="text" name="filtro-text" id="filtro-text" placeholder="Buscar tarea...">
+            <select name="filtro-paginador" id="filtro-paginador">
+                <option value="">Todos</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
+            <button type="button">Crear Tarea</button>
+        </div>
+        <form id="form-tarea" class="form-tarea">
+            <input id="tarea-title" name="title" type="text" placeholder="Nueva tarea..." required />
+            <label>
+                <input id="tarea-completed" name="completed" type="checkbox" />
+                Completada
+            </label>
+            <button type="submit">Crear</button>
+        </form>
+
+        <div class="resultado"></div>
+    </div>
+</body>
+
+</html>
