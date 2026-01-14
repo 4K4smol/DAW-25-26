@@ -1,0 +1,18 @@
+* {
+    /* Añadir borde de grosor 1 azul */
+    border: 1px solid blue;
+    /* espaciar 5px */
+    padding: 5px;
+    /* Añadir margen de 5px */
+    margin: 5px;
+}
+
+/* 3) Estilos usando selectores para <em> */
+em {
+    background: yellow;
+}
+
+/* 3) Estilos para <a> */
+a {
+    text-decoration: none;
+}

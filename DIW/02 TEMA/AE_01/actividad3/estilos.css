@@ -1,0 +1,30 @@
+/* 
+Establece un borde en el body de 2 px de color azul, texto de color rojo y espaciado
+de letra de 5 px.
+• Haz que h1 sea verde y herede el mismo borde que body.
+• Haz que el elemento p tenga color de texto inicial y alineamiento de texto centrado.
+*/
+
+
+@media screen {
+    body {
+        /* Bordes */
+        border: 2px solid blue;
+        color: red;
+        letter-spacing: 5px;
+    }
+
+    h1 {
+        /* Hereder */
+        border: inherit;
+        color: green;
+    }
+
+    p {
+        /* Texto de color inicial */
+        color: initial;
+        /* Centrar */
+        text-align: center;
+    }
+
+}

@@ -1,0 +1,24 @@
+h1 {
+    /* Indicar el tamaño */
+    width: 500px;
+    /* Separamos de todo los margenes */
+    margin: 40px auto;
+    padding: 10px 15px;
+    /* Damos borde al titulo, con grosor 2 y de color azul */
+    border: 2px solid blue; 
+    font-size: 24px;
+    /* negrita */
+    font-weight: bold;
+}
+
+p {
+    width: 350px;
+    /* Movemos a la derecha */
+    margin: 0px 0 0 950px;
+    padding: 15px 20px;
+    /* Indicamos borde con puntos de color rojo */
+    border: 2px dotted red;
+    /* Letra verde */
+    color: green;
+    font-size: 11px;
+}
