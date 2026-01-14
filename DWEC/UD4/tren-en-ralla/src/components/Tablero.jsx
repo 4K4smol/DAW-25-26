@@ -1,15 +1,37 @@
+import { useState } from "react";
 import "./tablero.css";
 
 export default function Tablero({ cambiarTurno, turno, jugadores }) {
   const tamañoTablero = 3;
+  const [posiciones, setPosiciones] = useState([]);
 
-  const handleClick = (e) => {
+  const handleClick = (e, posicion) => {
+    // Marcar casilla
     const casilla = e.target;
     casilla.textContent = jugadores[turno].ficha;
-    jugadores[turno].posiciones = [casilla.getAttribute('key')];
-    console.log(jugadores);
 
-    cambiarTurno(turno === 1 ? 0 : 1);
+    // Guardar casilla
+    setPosiciones((prev) => {
+      prev.forEach(p => {
+        console.log(p);
+      });
+      const nuevo = [
+        ...prev,
+        [...posicion]
+      ];
+      // console.log(nuevo);
+      return nuevo;
+    });
+
+    // Comprobar tablero
+    if (posiciones.length === 8) {
+      alert('fin');
+    }
+
+    jugadores[turno].posiciones = [posicion];
+    // console.log(jugadores);
+
+    cambiarTurno?.(turno === 1 ? 0 : 1);
   };
 
   function comprobarCasillas(casillas) {
@@ -39,7 +61,7 @@ export default function Tablero({ cambiarTurno, turno, jugadores }) {
                   <div
                     className="casilla"
                     key={`${f}-${c}`}
-                    onClick={(e) => handleClick(e)}
+                    onClick={(e) => handleClick(e, [f, c])}
                   ></div>
                 );
               })}
