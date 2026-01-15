@@ -1,14 +1,12 @@
-import { useState } from 'react'
-import ListaTareas from './components/ListaTareas'
-import './App.css'
+import ListaTareas from "./components/ListaTareas";
+import "./App.css";
 
 function App() {
-
-  return (
-    <>
-      <ListaTareas />
-    </>
-  )
+    return (
+        <>
+            <ListaTareas />
+        </>
+    );
 }
 
-export default App
+export default App;

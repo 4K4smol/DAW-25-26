@@ -1,0 +1,19 @@
+.tarea {
+  display: grid;
+  grid-template-columns: 4fr 2fr 1fr;
+  grid-template-rows: auto;
+  padding: 10px;
+  border: 1px solid;
+}
+
+.tarea * {
+  flex: 1;
+}
+
+.acciones {
+  display: flex;
+}
+.acciones button {
+  flex: 1;
+  margin: 5px;
+}

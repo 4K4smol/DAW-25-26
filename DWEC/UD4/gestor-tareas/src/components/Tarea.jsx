@@ -1,13 +1,20 @@
-function Tarea({ descripcion, estado, handleEliminar }) {
-    
+import "./tarea.css";
 
+function Tarea({ tarea, onClickEliminar, onClickCambiarEstado }) {
     return (
         <div className="tarea">
-            <p>{descripcion}</p>
-            <p>{estado ? 'Sí' : 'No'}</p>
-            <button onClick={handleEliminar}>Eliminar</button>
+            <p>{tarea.descripcion}</p>
+            <p>{tarea.estado == "abierta" ? "Abierta" : "Cerrada"}</p>
+            <div className="acciones">
+                <button onClick={() => onClickCambiarEstado(tarea.id)}>
+                    Cambiar Estado
+                </button>
+                <button onClick={() => onClickEliminar(tarea.id)}>
+                    Eliminar
+                </button>
+            </div>
         </div>
     );
 }
 
-export default tarea;
+export default Tarea;
