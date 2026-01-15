@@ -1,0 +1,30 @@
+.marcador {
+  background-color: black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.marcador-informacion {
+  background-color: grey;
+  display:flex;
+}
+.marcador-informacion p {
+  flex: 1;
+}
+
+.resultados {
+  display: flex;
+}
+
+.marcador-jugador {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+}
+
+.marcador-resultado {
+  color: white;
+  font-size: 18px;
+}
+

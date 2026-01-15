@@ -1,0 +1,19 @@
+.juego {
+    display: flex;
+    flex-direction: column;
+    width: min(600px);
+    height: min(600px);
+}
+
+.boton-reiniciar {
+    display: flex;
+}
+
+.boton-reiniciar button {
+    flex: 1;
+    height: 50px;
+}
+
+.boton-reiniciar button:hover {
+    background-color: red;
+}
