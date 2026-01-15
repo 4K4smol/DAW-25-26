@@ -7,8 +7,9 @@
 
 .marcador-informacion {
   background-color: grey;
-  display:flex;
+  display: flex;
 }
+
 .marcador-informacion p {
   flex: 1;
 }
@@ -23,8 +24,8 @@
   padding: 10px;
 }
 
-.marcador-resultado {
+.marcador-resultado,
+.marcador-informacion {
   color: white;
-  font-size: 18px;
+  font-size: 24px;
 }
-
