@@ -1,0 +1,26 @@
+.tabla-users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-users {
+    display: flex;
+}
+
+.campo-header-users {
+    flex: 1;
+}
+
+.body-users {
+    display: flex;
+    flex-direction: column;
+}
+
+.row-user-body {
+    display: flex;
+}
+
+.campo-body-users {
+    flex: 1;
+}
